@@ -1,37 +1,38 @@
 #pragma once
 
-#include <vector>
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <map>
-
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/Graphics.hpp"
-#include "SFML/Audio.hpp"
-#include "SFML/Network.hpp"
+#include "entities/Player.h"
 
 class State
 {
 public:
-	State(sf::RenderWindow* window);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~State();
 
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget* target = nullptr) = 0;
+	virtual void render(sf::RenderTarget* target = NULL) = 0;
 
-	virtual void checkForQuit();
 	const bool& getQuit() const;
-	virtual void updateKeybinds(const float& dt) = 0;
-	virtual void endState() = 0;
+	virtual void updateInput(const float& dt) = 0;
+	void endState();
+	virtual void updateMousePositions();
 
-private:
-	std::vector<sf::Texture> m_Textures;
+protected:
+	std::stack<State*>* m_States;
 	sf::RenderWindow* m_Window;
 	bool m_Quit;
+	std::map<std::string, int>* m_SupportedKeys;
+	std::map<std::string, int> keybinds;
+
+	sf::Vector2i m_MousePosScreen;
+	sf::Vector2i m_MousePosWindow;
+	sf::Vector2f m_MousePosView;
+
+	// resources
+	std::map<std::string, sf::Texture> m_Textures;
+
+	virtual void initKeybinds() = 0;
+
+private:
+
 };
 
