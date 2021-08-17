@@ -32,7 +32,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 		target = m_Window;
 
 	target->draw(m_Background);
-	renderButtons(target);
+	renderButtons(*target);
 
 	/*sf::Text mouseText;
 	mouseText.setPosition(m_MousePosView.x + 20.0f, m_MousePosView.y);
@@ -64,6 +64,12 @@ void MainMenuState::updateButtons()
 		m_States->push(new GameState(m_Window, m_SupportedKeys, m_States));
 	}
 
+	// editor
+	if (m_Buttons["EDITOR_STATE"]->isPressed())
+	{
+		m_States->push(new EditorState(m_Window, m_SupportedKeys, m_States));
+	}
+
 	// quit the game
 	if (m_Buttons["EXIT_STATE"]->isPressed())
 	{
@@ -71,7 +77,7 @@ void MainMenuState::updateButtons()
 	}
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget* target)
+void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
 	for (auto& it : m_Buttons)
 	{
@@ -129,15 +135,23 @@ void MainMenuState::initFonts()
 
 void MainMenuState::initButtons()
 {
-	m_Buttons["GAME_STAET"] = new Button(300, 480, 250, 50,
-		&m_Font, "New Game",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200));
+	m_Buttons["GAME_STAET"] = new Button(300.f, 480.f, 250.f, 50.f,
+		&m_Font, "New Game", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	m_Buttons["SETTINGS"] = new Button(300, 580, 250, 50,
-		&m_Font, "Settings",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200));
+		&m_Font, "Settings", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["EXIT_STATE"] = new Button(300, 780, 250, 50,
-		&m_Font, "Quit",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200));
+	m_Buttons["EDITOR_STATE"] = new Button(300, 680, 250, 50,
+		&m_Font, "Editor", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	m_Buttons["EXIT_STATE"] = new Button(300, 880, 250, 50,
+		&m_Font, "Quit", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }

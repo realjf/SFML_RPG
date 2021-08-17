@@ -25,7 +25,7 @@ void GameState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = m_Window;
-	m_Player->render(target);
+	m_Player->render(*target);
 }
 
 void GameState::updateInput(const float& dt)
@@ -63,14 +63,14 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!m_Textures["PLAYER_IDLE"].loadFromFile("resources/images/sprites/dinosaurs/png/Idle (1).png"))
+	if (!m_Textures["PLAYER_SHEET"].loadFromFile("resources/images/sprites/player/PLAYER_SHEET.png"))
 	{
-		throw("Error::GameState::Could_not_load_player_idle_texture");
+		throw("Error::GameState::Could_not_load_player_texture");
 	}
 }
 
 void GameState::initPlayers()
 {
-	m_Player = new Player(0, 0, m_Textures["PLAYER_IDLE"]);
+	m_Player = new Player(0, 0, m_Textures["PLAYER_SHEET"]);
 }
 

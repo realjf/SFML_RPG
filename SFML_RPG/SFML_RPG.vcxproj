@@ -87,6 +87,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\HitboxComponent.cpp" />
+    <ClCompile Include="src\states\EditorState.cpp" />
+    <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\MovementComponent.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\resources\Button.cpp" />
@@ -96,8 +99,12 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\states\State.cpp" />
+    <ClCompile Include="src\tile\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\HitboxComponent.h" />
+    <ClInclude Include="src\states\EditorState.h" />
+    <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\MovementComponent.h" />
     <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\resources\Button.h" />
@@ -106,6 +113,7 @@
     <ClInclude Include="src\states\GameState.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\states\State.h" />
+    <ClInclude Include="src\tile\Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

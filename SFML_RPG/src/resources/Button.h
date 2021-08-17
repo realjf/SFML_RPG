@@ -19,10 +19,13 @@ enum button_states {
 class Button
 {
 public:
-	Button(float x, float y, float width, float height, sf::Font* font, std::string text, sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor);
+	Button(float x, float y, float width, float height,
+		sf::Font* font, std::string text, unsigned characterSize,
+		sf::Color textIdleColor, sf::Color textHoverColor, sf::Color textActiveColor,
+		sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor);
 	virtual ~Button();
 
-	void render(sf::RenderTarget* target);
+	void render(sf::RenderTarget& target);
 	void update(const sf::Vector2f mousePos);
 
 	const bool isPressed() const;
@@ -37,7 +40,9 @@ private:
 	sf::Color m_HoverColor;
 	sf::Color m_ActiveColor;
 
-
+	sf::Color m_TextIdleColor;
+	sf::Color m_TextHoverColor;
+	sf::Color m_TextActiveColor;
 
 };
 
