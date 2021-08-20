@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gui\PauseMenu.cpp" />
     <ClCompile Include="src\components\HitboxComponent.cpp" />
     <ClCompile Include="src\states\EditorState.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="src\tile\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gui\PauseMenu.h" />
     <ClInclude Include="src\components\HitboxComponent.h" />
     <ClInclude Include="src\states\EditorState.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />

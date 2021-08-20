@@ -4,21 +4,32 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int>* suppo
 	: State(window, supportedKeys, states)
 {
 	initKeybinds();
+	initFonts();
 	initTextures();
+	initPauseMenu();
 	initPlayers();
 }
 
 GameState::~GameState()
 {
 	delete m_Player;
+	delete m_Pmenu;
 }
 
 void GameState::update(const float& dt)
 {
 	updateMousePositions();
 	updateInput(dt);
-	
-	m_Player->update(dt);
+	if (!m_Paused) 
+	{	
+		updatePlayerInput(dt);
+
+		m_Player->update(dt);
+	}
+	else { // paused update
+
+		m_Pmenu->update();
+	}
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -26,9 +37,14 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = m_Window;
 	m_Player->render(*target);
+
+	if (m_Paused)
+	{
+		m_Pmenu->render(*target);
+	}
 }
 
-void GameState::updateInput(const float& dt)
+void GameState::updatePlayerInput(const float& dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_LEFT"))))
 		m_Player->move(-1.f, 0.f, dt);
@@ -39,8 +55,17 @@ void GameState::updateInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_DOWN"))))
 		m_Player->move(0.f, 1.f, dt);
 
+}
+
+void GameState::updateInput(const float& dt)
+{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("CLOSE"))))
-		endState();
+	{
+		if (!m_Paused)
+			pauseState();
+		else
+			unpauseState();
+	}
 }
 
 void GameState::initKeybinds()
@@ -74,3 +99,15 @@ void GameState::initPlayers()
 	m_Player = new Player(0, 0, m_Textures["PLAYER_SHEET"]);
 }
 
+void GameState::initFonts()
+{
+	if (!m_Font.loadFromFile("fonts/Dosis-Light.ttf"))
+	{
+		throw("Error::MainMenuState::Could_not_load_font");
+	}
+}
+
+void GameState::initPauseMenu()
+{
+	m_Pmenu = new PauseMenu(*m_Window, m_Font);
+}

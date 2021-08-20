@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.h"
+#include "gui/PauseMenu.h"
 
 class GameState : public State
 {
@@ -10,12 +11,16 @@ public:
 
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);
+	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
-
 private:
 	Player* m_Player;
+	PauseMenu* m_Pmenu;
+	sf::Font m_Font;
 
 	void initKeybinds();
 	void initTextures();
 	void initPlayers();
+	void initFonts();
+	void initPauseMenu();
 };
