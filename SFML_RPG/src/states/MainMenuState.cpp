@@ -64,6 +64,11 @@ void MainMenuState::updateButtons()
 		m_States->push(new GameState(m_Window, m_SupportedKeys, m_States));
 	}
 
+	if (m_Buttons["SETTINGS_STATE"]->isPressed())
+	{
+		m_States->push(new SettingsState(m_Window, m_SupportedKeys, m_States));
+	}
+
 	// editor
 	if (m_Buttons["EDITOR_STATE"]->isPressed())
 	{
@@ -140,17 +145,17 @@ void MainMenuState::initButtons()
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["SETTINGS"] = new Button(300, 580, 250, 50,
+	m_Buttons["SETTINGS_STATE"] = new Button(300.f, 580.f, 250.f, 50.f,
 		&m_Font, "Settings", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["EDITOR_STATE"] = new Button(300, 680, 250, 50,
+	m_Buttons["EDITOR_STATE"] = new Button(300.f, 680.f, 250.f, 50.f,
 		&m_Font, "Editor", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["EXIT_STATE"] = new Button(300, 880, 250, 50,
+	m_Buttons["EXIT_STATE"] = new Button(300.f, 880.f, 250.f, 50.f,
 		&m_Font, "Quit", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));

@@ -41,7 +41,7 @@ void Button::render(sf::RenderTarget& target)
 	target.draw(m_Text);
 }
 
-void Button::update(const sf::Vector2f mousePos)
+void Button::update(const sf::Vector2f& mousePos)
 {
 	m_ButtonState = BTN_IDLE;
 

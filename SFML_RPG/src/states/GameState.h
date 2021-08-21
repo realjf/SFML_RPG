@@ -13,6 +13,7 @@ public:
 	void render(sf::RenderTarget* target = NULL);
 	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
+	void updatePauseMenuButtons();
 private:
 	Player* m_Player;
 	PauseMenu* m_Pmenu;

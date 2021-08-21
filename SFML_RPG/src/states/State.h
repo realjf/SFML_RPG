@@ -17,12 +17,16 @@ public:
 	virtual void updateMousePositions();
 	void pauseState();
 	void unpauseState();
+	virtual void updateKeytime(const float& dt);
+	const bool getKeytime();
 
 protected:
 	std::stack<State*>* m_States;
 	sf::RenderWindow* m_Window;
 	bool m_Quit;
 	bool m_Paused;
+	float m_Keytime;
+	float m_KeytimeMax;
 	std::map<std::string, int>* m_SupportedKeys;
 	std::map<std::string, int> keybinds;
 

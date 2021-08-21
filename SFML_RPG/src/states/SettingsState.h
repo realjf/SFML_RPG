@@ -1,15 +1,14 @@
 #pragma once
 
-#include "GameState.h"
+#include "State.h"
 #include "resources/Button.h"
-#include "EditorState.h"
-#include "SettingsState.h"
 
-class MainMenuState : public State
+class SettingsState
+	: public State
 {
 public:
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
-	virtual ~MainMenuState();
+	SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	virtual ~SettingsState();
 
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);

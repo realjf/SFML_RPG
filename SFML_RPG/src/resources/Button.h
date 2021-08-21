@@ -26,7 +26,7 @@ public:
 	virtual ~Button();
 
 	void render(sf::RenderTarget& target);
-	void update(const sf::Vector2f mousePos);
+	void update(const sf::Vector2f& mousePos);
 
 	const bool isPressed() const;
 private:

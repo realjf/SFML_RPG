@@ -20,6 +20,8 @@ void GameState::update(const float& dt)
 {
 	updateMousePositions();
 	updateInput(dt);
+	updateKeytime(dt);
+
 	if (!m_Paused) 
 	{	
 		updatePlayerInput(dt);
@@ -28,7 +30,8 @@ void GameState::update(const float& dt)
 	}
 	else { // paused update
 
-		m_Pmenu->update();
+		m_Pmenu->update(m_MousePosView);
+		updatePauseMenuButtons();
 	}
 }
 
@@ -59,13 +62,19 @@ void GameState::updatePlayerInput(const float& dt)
 
 void GameState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("CLOSE"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("CLOSE"))) && getKeytime())
 	{
 		if (!m_Paused)
 			pauseState();
 		else
 			unpauseState();
 	}
+}
+
+void GameState::updatePauseMenuButtons()
+{
+	if (m_Pmenu->isButtonPressed("QUIT"))
+		endState();
 }
 
 void GameState::initKeybinds()
@@ -110,4 +119,5 @@ void GameState::initFonts()
 void GameState::initPauseMenu()
 {
 	m_Pmenu = new PauseMenu(*m_Window, m_Font);
+	m_Pmenu->addButton("QUIT", 800.f, "Quit");
 }
