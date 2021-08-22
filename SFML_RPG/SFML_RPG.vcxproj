@@ -94,7 +94,7 @@
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\MovementComponent.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
-    <ClCompile Include="src\resources\Button.cpp" />
+    <ClCompile Include="src\resources\Gui.cpp" />
     <ClCompile Include="src\states\MainMenuState.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
     <ClCompile Include="src\states\GameState.cpp" />
@@ -111,7 +111,7 @@
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\MovementComponent.h" />
     <ClInclude Include="src\entities\Player.h" />
-    <ClInclude Include="src\resources\Button.h" />
+    <ClInclude Include="src\resources\Gui.h" />
     <ClInclude Include="src\states\MainMenuState.h" />
     <ClInclude Include="src\entities\Entity.h" />
     <ClInclude Include="src\states\GameState.h" />

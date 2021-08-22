@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameState.h"
-#include "resources/Button.h"
+#include "resources/Gui.h"
 #include "EditorState.h"
 #include "SettingsState.h"
 
@@ -22,7 +22,7 @@ private:
 	sf::RectangleShape m_Background;
 	sf::Font m_Font;
 
-	std::map<std::string, Button*> m_Buttons;
+	std::map<std::string, GUI::Button*> m_Buttons;
 
 	void initVariables();
 	void initBackground();

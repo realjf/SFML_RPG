@@ -10,7 +10,7 @@
 #include <stack>
 #include <map>
 
-#include "resources/Button.h"
+#include "resources/Gui.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -27,7 +27,7 @@ public:
 	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 
-	std::map<std::string, Button*>& getButtons();
+	std::map<std::string, GUI::Button*>& getButtons();
 	void addButton(const std::string key, float y, const std::string text);
 	const bool isButtonPressed(const std::string key);
 
@@ -38,6 +38,6 @@ private:
 	sf::Font& m_Font;
 	sf::Text m_MenuText;
 
-	std::map<std::string, Button*> m_Buttons;
+	std::map<std::string, GUI::Button*> m_Buttons;
 };
 
