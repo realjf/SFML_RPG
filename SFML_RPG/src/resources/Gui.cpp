@@ -82,4 +82,96 @@ namespace GUI {
 		return false;
 	}
 
+	const std::string& Button::getText() const
+	{
+		return m_Text.getString();
+	}
+
+	void Button::setText(const std::string text)
+	{
+		m_Text.setString(text);
+	}
+
+	DropDownList::DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned nrOfElements, unsigned defaultIndex)
+		: m_Font(font), m_ShowList(false), m_KeytimeMax(1.f), m_Keytime(0.f)
+	{
+		//unsigned nrOfElements = sizeof(list) / sizeof(std::string);
+
+		for (size_t i = 0; i < nrOfElements; i++)
+		{
+			m_List.push_back(
+				new GUI::Button(x, y + (i * height), width, height,
+					&m_Font, list[i], 12,
+					sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
+					sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200))
+			);
+		}
+
+		m_ActiveElement = new Button(*m_List[defaultIndex]);
+	}
+
+	DropDownList::~DropDownList()
+	{
+		delete m_ActiveElement;
+		for (size_t i = 0; i < m_List.size(); i++)
+		{
+			delete m_List[i];
+		}
+	}
+
+	void DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
+	{
+		updateKeytime(dt);
+
+		m_ActiveElement->update(mousePos);
+
+		if (m_ActiveElement->isPressed() && getKeytime())
+		{
+			if (m_ShowList)
+				m_ShowList = false;
+			else
+				m_ShowList = true;
+		}
+
+		if (m_ShowList) 
+		{
+			for (auto& i : m_List)
+			{
+				i->update(mousePos);
+			}
+		}
+		
+
+	}
+
+	void DropDownList::render(sf::RenderTarget& target)
+	{
+		m_ActiveElement->render(target);
+
+		if (m_ShowList)
+		{
+			for (auto& i : m_List)
+			{
+				i->render(target);
+			}
+		}
+	}
+
+	const bool DropDownList::getKeytime()
+	{
+		if (m_Keytime >= m_KeytimeMax)
+		{
+			m_Keytime = 0.f;
+			return true;
+		}
+
+		return false;
+	}
+
+	void DropDownList::updateKeytime(const float& dt)
+	{
+		if (m_Keytime < m_KeytimeMax)
+			m_Keytime += 10.f * dt;
+	}
+
 }

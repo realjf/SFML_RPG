@@ -16,6 +16,8 @@ SettingsState::~SettingsState()
 	{
 		delete it->second;
 	}
+
+	delete m_Ddl;
 }
 
 void SettingsState::update(const float& dt)
@@ -24,6 +26,8 @@ void SettingsState::update(const float& dt)
 	updateInput(dt);
 
 	updateButtons();
+
+	m_Ddl->update(m_MousePosView, dt);
 }
 
 void SettingsState::render(sf::RenderTarget* target)
@@ -33,6 +37,8 @@ void SettingsState::render(sf::RenderTarget* target)
 
 	target->draw(m_Background);
 	renderButtons(*target);
+
+	m_Ddl->render(*target);
 
 	/*sf::Text mouseText;
 	mouseText.setPosition(m_MousePosView.x + 20.0f, m_MousePosView.y);
@@ -63,6 +69,8 @@ void SettingsState::updateButtons()
 	{
 		endState();
 	}
+
+	
 }
 
 void SettingsState::renderButtons(sf::RenderTarget& target)
@@ -128,4 +136,7 @@ void SettingsState::initButtons()
 		&m_Font, "Quit", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	std::string li[] = { "button1", "button2", "button3", "button4", "button5" };
+	m_Ddl = new GUI::DropDownList(100, 100, 200, 50, m_Font, li, 5);
 }

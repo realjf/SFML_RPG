@@ -23,6 +23,8 @@ private:
 
 	std::map<std::string, GUI::Button*> m_Buttons;
 
+	GUI::DropDownList* m_Ddl;
+
 	void initVariables();
 	void initBackground();
 	void initKeybinds();

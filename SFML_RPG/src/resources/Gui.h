@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <sstream>
+#include <vector>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -31,6 +32,9 @@ namespace GUI {
 		void update(const sf::Vector2f& mousePos);
 
 		const bool isPressed() const;
+		const std::string& getText() const;
+
+		void setText(const std::string text);
 	private:
 		short unsigned m_ButtonState;
 
@@ -49,13 +53,23 @@ namespace GUI {
 	};
 
 
-	class DropDownBox
+	class DropDownList
 	{
 	public:
-		void update(const sf::Vector2f& mousePos);
+		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned nrOfElements, unsigned defaultIndex = 0);
+		~DropDownList();
+
+		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
+		const bool getKeytime();
+		void updateKeytime(const float& dt);
 
 	private:
-
+		GUI::Button* m_ActiveElement;
+		std::vector<GUI::Button*> m_List;
+		sf::Font& m_Font;
+		bool m_ShowList;
+		float m_Keytime;
+		float m_KeytimeMax;
 	};
 }
