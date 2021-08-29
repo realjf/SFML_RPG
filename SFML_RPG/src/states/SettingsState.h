@@ -13,8 +13,8 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);
 	void updateInput(const float& dt);
-	void updateButtons();
-	void renderButtons(sf::RenderTarget& target);
+	void updateGui(const float& dt);
+	void renderGui(sf::RenderTarget& target);
 
 private:
 	sf::Texture m_BackgroundTexture;
@@ -22,13 +22,16 @@ private:
 	sf::Font m_Font;
 
 	std::map<std::string, GUI::Button*> m_Buttons;
+	std::map<std::string, GUI::DropDownList*> m_DropDownLists;
 
-	GUI::DropDownList* m_Ddl;
+	sf::Text m_OptionsText;
+	std::vector<sf::VideoMode> m_Modes;
 
 	void initVariables();
 	void initBackground();
 	void initKeybinds();
 	void initFonts();
-	void initButtons();
+	void initGui();
+	void initText();
 };
 
