@@ -1,6 +1,5 @@
 #pragma once
 
-#include "states/GameState.h"
 #include "states/MainMenuState.h"
 
 class Game
@@ -17,11 +16,10 @@ public:
 	void endApplication();
 
 private:
+	
+	GraphicsSettings m_GfxSettings;
 	sf::RenderWindow *m_Window;
 	sf::Event m_SfEvent;
-	std::vector<sf::VideoMode> m_VideoModes;
-	sf::ContextSettings m_WindowSettings;
-	bool m_Fullscreen;
 
 	sf::Clock m_DtClock;
 	float m_Dt;
@@ -30,6 +28,7 @@ private:
 	std::map<std::string, int> m_SupportedKeys;
 
 	void initVariables();
+	void initGraphicsSettings();
 	void initWindow();
 	void initStates();
 	void initKeys();

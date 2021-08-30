@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entities/Player.h"
+#include "resources/GraphicsSettings.h"
 
 class State
 {
@@ -23,6 +24,7 @@ public:
 protected:
 	std::stack<State*>* m_States;
 	sf::RenderWindow* m_Window;
+	
 	bool m_Quit;
 	bool m_Paused;
 	float m_Keytime;

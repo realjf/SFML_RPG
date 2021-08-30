@@ -1,7 +1,8 @@
+#include "stdafx.h"
 #include "SettingsState.h"
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	: State(window, supportedKeys, states), m_GfxSettings(gfxSettings)
 {
 	initVariables();
 	initBackground();
@@ -73,7 +74,9 @@ void SettingsState::updateGui(const float& dt)
 
 	if (m_Buttons["APPLY"]->isPressed())
 	{
-		m_Window->create(m_Modes[m_DropDownLists["RESOLUTION"]->getActiveElementId()], "test", sf::Style::Default);
+		m_GfxSettings.m_Resolution = m_Modes[m_DropDownLists["RESOLUTION"]->getActiveElementId()];
+
+		m_Window->create(m_GfxSettings.m_Resolution, m_GfxSettings.m_Title, sf::Style::Default);
 	}
 
 	for (auto& it : m_DropDownLists)

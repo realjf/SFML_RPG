@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Game.h"
 
 // static functions
@@ -92,49 +93,29 @@ void Game::endApplication()
 void Game::initVariables()
 {
 	m_Window = NULL;
-	m_Fullscreen = false;
 	m_Dt = 0.f;
 
 }
 
+void Game::initGraphicsSettings()
+{
+	m_GfxSettings.loadFromFile("config/graphics.ini");
+}
+
 void Game::initWindow()
 {
-	std::ifstream ifs("config/window.ini");
-	m_VideoModes = sf::VideoMode::getFullscreenModes();
-
-	std::string title = "None";
-	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
-	bool fullscreen = false;
-	unsigned framerate_limit = 120;
-	bool vertical_sync_enabled = false;
-	unsigned antialiasing_level = 0;
-
-	if (ifs.is_open())
-	{
-		std::getline(ifs, title);
-		ifs >> window_bounds.width >> window_bounds.height;
-		ifs >> fullscreen;
-		ifs >> framerate_limit;
-		ifs >> vertical_sync_enabled;
-		ifs >> antialiasing_level;
-	}
-
-	ifs.close();
-
-	m_WindowSettings.antialiasingLevel = antialiasing_level;
-	m_Fullscreen = fullscreen;
-	if (m_Fullscreen)
-		m_Window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, m_WindowSettings);
+	if (m_GfxSettings.m_Fullscreen)
+		m_Window = new sf::RenderWindow(m_GfxSettings.m_Resolution, m_GfxSettings.m_Title, sf::Style::Fullscreen, m_GfxSettings.m_ContextSettings);
 	else 
-		m_Window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, m_WindowSettings);
+		m_Window = new sf::RenderWindow(m_GfxSettings.m_Resolution, m_GfxSettings.m_Title, sf::Style::Titlebar | sf::Style::Close, m_GfxSettings.m_ContextSettings);
 	
-	m_Window->setFramerateLimit(framerate_limit);
-	m_Window->setVerticalSyncEnabled(vertical_sync_enabled);
+	m_Window->setFramerateLimit(m_GfxSettings.m_FrameRateLimit);
+	m_Window->setVerticalSyncEnabled(m_GfxSettings.m_VerticalSync);
 }
 
 void Game::initStates()
 {
-	m_States.push(new MainMenuState(m_Window, &m_SupportedKeys, &m_States));
+	m_States.push(new MainMenuState(m_Window, m_GfxSettings, &m_SupportedKeys, &m_States));
 	//m_States.push(new GameState(m_Window, &m_SupportedKeys));
 }
 

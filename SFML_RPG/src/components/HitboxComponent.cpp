@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "HitboxComponent.h"
 
 HitboxComponent::HitboxComponent(sf::Sprite& sprite, float offsetx, float offsety, float width, float height)

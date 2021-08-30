@@ -59,6 +59,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)external\SFML\include;$(ProjectDir)src\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,6 +77,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)external\SFML\include;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\resources\GraphicsSettings.cpp" />
     <ClCompile Include="src\states\SettingsState.cpp" />
     <ClCompile Include="src\gui\PauseMenu.cpp" />
     <ClCompile Include="src\components\HitboxComponent.cpp" />
@@ -101,9 +104,15 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\states\State.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\tile\Tile.cpp" />
+    <ClCompile Include="src\map\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\resources\GraphicsSettings.h" />
     <ClInclude Include="src\states\SettingsState.h" />
     <ClInclude Include="src\gui\PauseMenu.h" />
     <ClInclude Include="src\components\HitboxComponent.h" />
@@ -117,7 +126,9 @@
     <ClInclude Include="src\states\GameState.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\states\State.h" />
+    <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\tile\Tile.h" />
+    <ClInclude Include="src\map\TileMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

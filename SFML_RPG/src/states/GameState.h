@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "gui/PauseMenu.h"
+#include "map/TileMap.h"
 
 class GameState : public State
 {
@@ -18,6 +19,7 @@ private:
 	Player* m_Player;
 	PauseMenu* m_Pmenu;
 	sf::Font m_Font;
+	TileMap m_Map;
 
 	void initKeybinds();
 	void initTextures();

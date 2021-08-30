@@ -1,7 +1,8 @@
+#include "stdafx.h"
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	: State(window, supportedKeys, states), m_GfxSettings(gfxSettings)
 {
 	initVariables();
 	initBackground();
@@ -66,7 +67,7 @@ void MainMenuState::updateButtons()
 
 	if (m_Buttons["SETTINGS_STATE"]->isPressed())
 	{
-		m_States->push(new SettingsState(m_Window, m_SupportedKeys, m_States));
+		m_States->push(new SettingsState(m_Window, m_GfxSettings, m_SupportedKeys, m_States));
 	}
 
 	// editor

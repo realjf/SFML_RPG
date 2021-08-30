@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "GameState.h"
 
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
@@ -39,6 +40,9 @@ void GameState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = m_Window;
+
+	//m_Map.render(*target);
+
 	m_Player->render(*target);
 
 	if (m_Paused)

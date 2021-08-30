@@ -4,11 +4,12 @@
 #include "resources/Gui.h"
 #include "EditorState.h"
 #include "SettingsState.h"
+#include "resources/GraphicsSettings.h"
 
 class MainMenuState : public State
 {
 public:
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~MainMenuState();
 
 	void update(const float& dt);
@@ -21,6 +22,7 @@ private:
 	sf::Texture m_BackgroundTexture;
 	sf::RectangleShape m_Background;
 	sf::Font m_Font;
+	GraphicsSettings& m_GfxSettings;
 
 	std::map<std::string, GUI::Button*> m_Buttons;
 
