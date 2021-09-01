@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "EditorState.h"
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+EditorState::EditorState(StateData* stateData)
+	: State(stateData)
 {
 	initVariables();
 	initBackground();
 	initFonts();
 	initKeybinds();
+	initPauseMenu();
 	initButtons();
 }
 
@@ -17,14 +18,23 @@ EditorState::~EditorState()
 	{
 		delete it->second;
 	}
+	delete m_Pmenu;
 }
 
 void EditorState::update(const float& dt)
 {
 	updateMousePositions();
+	updateKeytime(dt);
 	updateInput(dt);
 
-	updateButtons();
+	if (!m_Paused)
+	{
+		updateButtons();
+	}
+	else {
+		m_Pmenu->update(m_MousePosView);
+		updatePauseMenuButtons();
+	}
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -33,12 +43,24 @@ void EditorState::render(sf::RenderTarget* target)
 		target = m_Window;
 
 	renderButtons(*target);
+
+	m_Map.render(*target);
+
+	if (m_Paused)
+	{
+		m_Pmenu->render(*target);
+	}
 }
 
 void EditorState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("CLOSE"))))
-		endState();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("CLOSE"))) && getKeytime())
+	{
+		if (!m_Paused)
+			pauseState();
+		else
+			unpauseState();
+	}
 }
 
 
@@ -56,6 +78,12 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 	{
 		it.second->render(target);
 	}
+}
+
+void EditorState::updatePauseMenuButtons()
+{
+	if (m_Pmenu->isButtonPressed("QUIT"))
+		endState();
 }
 
 void EditorState::initVariables()
@@ -78,7 +106,7 @@ void EditorState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			keybinds[key] = m_SupportedKeys->at(key2);
+			m_Keybinds[key] = m_SupportedKeys->at(key2);
 		}
 	}
 
@@ -95,5 +123,11 @@ void EditorState::initFonts()
 
 void EditorState::initButtons()
 {
+	
+}
 
+void EditorState::initPauseMenu()
+{
+	m_Pmenu = new PauseMenu(*m_Window, m_Font);
+	m_Pmenu->addButton("QUIT", 800.f, "Quit");
 }

@@ -9,8 +9,11 @@
 
 Game::Game()
 {
+	initVariables();
+	initGraphicsSettings();
 	initWindow();
 	initKeys();
+	initStateData();
 	initStates();
 }
 
@@ -95,6 +98,8 @@ void Game::initVariables()
 	m_Window = NULL;
 	m_Dt = 0.f;
 
+	m_GridSize = 50.f;
+
 }
 
 void Game::initGraphicsSettings()
@@ -115,7 +120,7 @@ void Game::initWindow()
 
 void Game::initStates()
 {
-	m_States.push(new MainMenuState(m_Window, m_GfxSettings, &m_SupportedKeys, &m_States));
+	m_States.push(new MainMenuState(&m_StateData));
 	//m_States.push(new GameState(m_Window, &m_SupportedKeys));
 }
 
@@ -140,4 +145,13 @@ void Game::initKeys()
 	{
 		std::cout << i.first << " " << i.second << std::endl;
 	}
+}
+
+void Game::initStateData()
+{
+	m_StateData.m_Window = m_Window;
+	m_StateData.m_GfxSettings = &m_GfxSettings;
+	m_StateData.m_SupportedKeys = &m_SupportedKeys;
+	m_StateData.m_States = &m_States;
+	m_StateData.m_GridSize = m_GridSize;
 }

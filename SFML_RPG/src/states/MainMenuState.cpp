@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states), m_GfxSettings(gfxSettings)
+MainMenuState::MainMenuState(StateData* stateData)
+	: State(stateData)
 {
 	initVariables();
 	initBackground();
@@ -62,18 +62,18 @@ void MainMenuState::updateButtons()
 	// new game
 	if (m_Buttons["GAME_STAET"]->isPressed())
 	{
-		m_States->push(new GameState(m_Window, m_SupportedKeys, m_States));
+		m_States->push(new GameState(m_StateData));
 	}
 
 	if (m_Buttons["SETTINGS_STATE"]->isPressed())
 	{
-		m_States->push(new SettingsState(m_Window, m_GfxSettings, m_SupportedKeys, m_States));
+		m_States->push(new SettingsState(m_StateData));
 	}
 
 	// editor
 	if (m_Buttons["EDITOR_STATE"]->isPressed())
 	{
-		m_States->push(new EditorState(m_Window, m_SupportedKeys, m_States));
+		m_States->push(new EditorState(m_StateData));
 	}
 
 	// quit the game
@@ -124,7 +124,7 @@ void MainMenuState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			keybinds[key] = m_SupportedKeys->at(key2);
+			m_Keybinds[key] = m_SupportedKeys->at(key2);
 		}
 	}
 

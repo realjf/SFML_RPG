@@ -3,10 +3,10 @@
 
 TileMap::TileMap()
 {
-	m_GridSizeF = 50.f;
+	m_GridSizeF = 100.f;
 	m_GridSizeU = static_cast<unsigned>(m_GridSizeF);
-	m_MaxSize.x = 100;
-	m_MaxSize.y = 100;
+	m_MaxSize.x = 10;
+	m_MaxSize.y = 10;
 	m_Layers = 1;
 	
 	m_Map.resize(m_MaxSize.x);

@@ -2,14 +2,17 @@
 #include "State.h"
 
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+State::State(StateData* stateData)
 {
-	m_Window = window;
+	m_StateData = stateData;
+	m_Window = stateData->m_Window;
 	m_Quit = false;
-	m_SupportedKeys = supportedKeys;
-	m_States = states;
+	m_Paused = false;
+	m_SupportedKeys = stateData->m_SupportedKeys;
+	m_States = stateData->m_States;
 	m_Keytime = 0.f;
 	m_KeytimeMax = 100.f;
+	m_GridSize = stateData->m_GridSize;
 }
 
 State::~State()

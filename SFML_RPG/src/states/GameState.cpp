@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+GameState::GameState(StateData* stateData)
+	: State(stateData)
 {
 	initKeybinds();
 	initFonts();
@@ -53,20 +53,20 @@ void GameState::render(sf::RenderTarget* target)
 
 void GameState::updatePlayerInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_LEFT"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_LEFT"))))
 		m_Player->move(-1.f, 0.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_RIGHT"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_RIGHT"))))
 		m_Player->move(1.f, 0.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_UP"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_UP"))))
 		m_Player->move(0.f, -1.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("MOVE_DOWN"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_DOWN"))))
 		m_Player->move(0.f, 1.f, dt);
 
 }
 
 void GameState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds.at("CLOSE"))) && getKeytime())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("CLOSE"))) && getKeytime())
 	{
 		if (!m_Paused)
 			pauseState();
@@ -92,7 +92,7 @@ void GameState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			keybinds[key] = m_SupportedKeys->at(key2);
+			m_Keybinds[key] = m_SupportedKeys->at(key2);
 		}
 	}
 

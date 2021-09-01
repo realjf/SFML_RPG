@@ -9,7 +9,7 @@
 class MainMenuState : public State
 {
 public:
-	MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	MainMenuState(StateData* stateData);
 	virtual ~MainMenuState();
 
 	void update(const float& dt);
@@ -22,7 +22,6 @@ private:
 	sf::Texture m_BackgroundTexture;
 	sf::RectangleShape m_Background;
 	sf::Font m_Font;
-	GraphicsSettings& m_GfxSettings;
 
 	std::map<std::string, GUI::Button*> m_Buttons;
 

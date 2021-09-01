@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SettingsState.h"
 
-SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states), m_GfxSettings(gfxSettings)
+SettingsState::SettingsState(StateData* stateData)
+	: State(stateData)
 {
 	initVariables();
 	initBackground();
@@ -74,9 +74,9 @@ void SettingsState::updateGui(const float& dt)
 
 	if (m_Buttons["APPLY"]->isPressed())
 	{
-		m_GfxSettings.m_Resolution = m_Modes[m_DropDownLists["RESOLUTION"]->getActiveElementId()];
+		m_StateData->m_GfxSettings->m_Resolution = m_Modes[m_DropDownLists["RESOLUTION"]->getActiveElementId()];
 
-		m_Window->create(m_GfxSettings.m_Resolution, m_GfxSettings.m_Title, sf::Style::Default);
+		m_Window->create(m_StateData->m_GfxSettings->m_Resolution, m_StateData->m_GfxSettings->m_Title, sf::Style::Default);
 	}
 
 	for (auto& it : m_DropDownLists)
@@ -132,7 +132,7 @@ void SettingsState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			keybinds[key] = m_SupportedKeys->at(key2);
+			m_Keybinds[key] = m_SupportedKeys->at(key2);
 		}
 	}
 
