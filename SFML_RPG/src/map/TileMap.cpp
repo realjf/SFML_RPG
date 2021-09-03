@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap()
+TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 {
-	m_GridSizeF = 100.f;
+	m_GridSizeF = gridSize;
 	m_GridSizeU = static_cast<unsigned>(m_GridSizeF);
-	m_MaxSize.x = 10;
-	m_MaxSize.y = 10;
+	m_MaxSize.x = width;
+	m_MaxSize.y = height;
 	m_Layers = 1;
 	
 	m_Map.resize(m_MaxSize.x);
@@ -49,4 +49,14 @@ void TileMap::render(sf::RenderTarget& target)
 			}
 		}
 	}
+}
+
+void TileMap::addTile()
+{
+
+}
+
+void TileMap::removeTile()
+{
+
 }

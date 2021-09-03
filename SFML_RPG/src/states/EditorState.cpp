@@ -10,6 +10,8 @@ EditorState::EditorState(StateData* stateData)
 	initKeybinds();
 	initPauseMenu();
 	initButtons();
+	initGui();
+	initTileMap();
 }
 
 EditorState::~EditorState()
@@ -19,6 +21,7 @@ EditorState::~EditorState()
 		delete it->second;
 	}
 	delete m_Pmenu;
+	delete m_TileMap;
 }
 
 void EditorState::update(const float& dt)
@@ -30,6 +33,7 @@ void EditorState::update(const float& dt)
 	if (!m_Paused)
 	{
 		updateButtons();
+		updateGui();
 	}
 	else {
 		m_Pmenu->update(m_MousePosView);
@@ -43,8 +47,9 @@ void EditorState::render(sf::RenderTarget* target)
 		target = m_Window;
 
 	renderButtons(*target);
+	renderGui(*target);
 
-	m_Map.render(*target);
+	m_TileMap->render(*target);
 
 	if (m_Paused)
 	{
@@ -84,6 +89,16 @@ void EditorState::updatePauseMenuButtons()
 {
 	if (m_Pmenu->isButtonPressed("QUIT"))
 		endState();
+}
+
+void EditorState::updateGui()
+{
+	m_SelectorRect.setPosition(m_MousePosView);
+}
+
+void EditorState::renderGui(sf::RenderTarget& target)
+{
+	target.draw(m_SelectorRect);
 }
 
 void EditorState::initVariables()
@@ -130,4 +145,18 @@ void EditorState::initPauseMenu()
 {
 	m_Pmenu = new PauseMenu(*m_Window, m_Font);
 	m_Pmenu->addButton("QUIT", 800.f, "Quit");
+}
+
+void EditorState::initGui()
+{
+	m_SelectorRect.setSize(sf::Vector2f(m_StateData->m_GridSize, m_StateData->m_GridSize));
+	m_SelectorRect.setFillColor(sf::Color::Transparent);
+	
+	m_SelectorRect.setOutlineThickness(1.f);
+	m_SelectorRect.setOutlineColor(sf::Color::Green);
+}
+
+void EditorState::initTileMap()
+{
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10);
 }

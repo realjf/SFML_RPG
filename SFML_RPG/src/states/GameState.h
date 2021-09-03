@@ -19,11 +19,12 @@ private:
 	Player* m_Player;
 	PauseMenu* m_Pmenu;
 	sf::Font m_Font;
-	TileMap m_Map;
+	TileMap* m_TileMap;
 
 	void initKeybinds();
 	void initTextures();
 	void initPlayers();
 	void initFonts();
 	void initPauseMenu();
+	void initTileMap();
 };

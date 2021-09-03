@@ -24,13 +24,16 @@ public:
 	void updateButtons();
 	void renderButtons(sf::RenderTarget& target);
 	void updatePauseMenuButtons();
+	void updateGui();
+	void renderGui(sf::RenderTarget& target);
 
 private:
 	sf::Font m_Font;
 	PauseMenu* m_Pmenu;
-	TileMap m_Map;
+	TileMap* m_TileMap;
 
 	std::map<std::string, GUI::Button*> m_Buttons;
+	sf::RectangleShape m_SelectorRect;
 
 	void initVariables();
 	void initBackground();
@@ -38,5 +41,7 @@ private:
 	void initFonts();
 	void initButtons();
 	void initPauseMenu();
+	void initGui();
+	void initTileMap();
 };
 
