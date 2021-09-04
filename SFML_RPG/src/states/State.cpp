@@ -11,7 +11,7 @@ State::State(StateData* stateData)
 	m_SupportedKeys = stateData->m_SupportedKeys;
 	m_States = stateData->m_States;
 	m_Keytime = 0.f;
-	m_KeytimeMax = 100.f;
+	m_KeytimeMax = 10.f;
 	m_GridSize = stateData->m_GridSize;
 }
 
@@ -35,6 +35,10 @@ void State::updateMousePositions()
 	m_MousePosScreen = sf::Mouse::getPosition();
 	m_MousePosWindow = sf::Mouse::getPosition(*m_Window);
 	m_MousePosView = m_Window->mapPixelToCoords(sf::Mouse::getPosition(*m_Window));
+	m_MousePosGrid = sf::Vector2u(
+		static_cast<unsigned>(m_MousePosView.x) / static_cast<unsigned>(m_GridSize), 
+		static_cast<unsigned>(m_MousePosView.y) / static_cast<unsigned>(m_GridSize)
+	);
 }
 
 void State::pauseState()

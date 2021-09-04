@@ -73,4 +73,28 @@ namespace GUI {
 		float m_Keytime;
 		float m_KeytimeMax;
 	};
+
+	class TextureSelector
+	{
+	public:
+		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* textureSheet, sf::Font& font, std::string text);
+		~TextureSelector();
+
+		const bool& getActive() const;
+		const sf::IntRect& getTextureRect() const;
+
+		void update(const sf::Vector2i& mousePosWindow);
+		void render(sf::RenderTarget& target);
+
+	private:
+		sf::RectangleShape m_Bounds;
+		sf::Sprite m_Sheet;
+		sf::RectangleShape m_Selector;
+		sf::Vector2u m_MousePosGrid;
+		sf::IntRect m_TextureRect;
+		bool m_Active;
+		float m_GridSize;
+		bool m_Hidden;
+		GUI::Button* m_HideBtn;
+	};
 }

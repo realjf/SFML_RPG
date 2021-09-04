@@ -26,6 +26,7 @@ public:
 	void updatePauseMenuButtons();
 	void updateGui();
 	void renderGui(sf::RenderTarget& target);
+	void updateEditorInput(const float& dt);
 
 private:
 	sf::Font m_Font;
@@ -34,6 +35,9 @@ private:
 
 	std::map<std::string, GUI::Button*> m_Buttons;
 	sf::RectangleShape m_SelectorRect;
+	sf::IntRect m_TextureRect;
+	sf::Text m_CursorText;
+	GUI::TextureSelector* m_TextureSelector;
 
 	void initVariables();
 	void initBackground();
@@ -43,5 +47,6 @@ private:
 	void initPauseMenu();
 	void initGui();
 	void initTileMap();
+	void initText();
 };
 

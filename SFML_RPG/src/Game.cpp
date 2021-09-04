@@ -98,7 +98,7 @@ void Game::initVariables()
 	m_Window = NULL;
 	m_Dt = 0.f;
 
-	m_GridSize = 50.f;
+	m_GridSize = 100.f;
 
 }
 

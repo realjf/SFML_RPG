@@ -220,4 +220,114 @@ namespace GUI {
 		return m_ActiveElement->getId();
 	}
 
+
+
+
+	TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, 
+		const sf::Texture* textureSheet, sf::Font& font, std::string text)
+	{
+		m_Active = false;
+		m_GridSize = gridSize;
+		m_Hidden = false;
+		float offset = 60.f;
+
+		m_Bounds.setSize(sf::Vector2f(width, height));
+		m_Bounds.setPosition(x + offset, y);
+		m_Bounds.setFillColor(sf::Color(50, 50, 50, 100));
+		m_Bounds.setOutlineThickness(1.f);
+		m_Bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+
+		m_Sheet.setTexture(*textureSheet);
+		m_Sheet.setPosition(x + offset, y);
+
+		if (m_Sheet.getGlobalBounds().width > m_Bounds.getGlobalBounds().width)
+		{
+			m_Sheet.setTextureRect(sf::IntRect(0, 0, m_Bounds.getGlobalBounds().width, m_Sheet.getGlobalBounds().height));
+		}
+		if (m_Sheet.getGlobalBounds().height > m_Bounds.getGlobalBounds().height)
+		{
+			m_Sheet.setTextureRect(sf::IntRect(0, 0, m_Sheet.getGlobalBounds().width, m_Bounds.getGlobalBounds().height));
+		}
+
+		m_Selector.setPosition(x + offset, y);
+		m_Selector.setSize(sf::Vector2f(gridSize, gridSize));
+		m_Selector.setFillColor(sf::Color::Transparent);
+		m_Selector.setOutlineThickness(1.f);
+		m_Selector.setOutlineColor(sf::Color::Red);
+
+		m_TextureRect.width = static_cast<int>(gridSize);
+		m_TextureRect.height = static_cast<int>(gridSize);
+		
+		m_HideBtn = new GUI::Button(y, x, 50.f, 50.f,
+			&font, text, 30,
+			sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+	}
+
+	TextureSelector::~TextureSelector()
+	{
+		delete m_HideBtn;
+	}
+
+	const bool& TextureSelector::getActive() const
+	{
+		return m_Active;
+	}
+
+	const sf::IntRect& TextureSelector::getTextureRect() const
+	{
+		return m_TextureRect;
+	}
+
+	void TextureSelector::update(const sf::Vector2i& mousePosWindow)
+	{
+		m_HideBtn->update(static_cast<sf::Vector2f>(mousePosWindow));
+
+		if (m_HideBtn->isPressed())
+		{
+			if (m_Hidden)
+				m_Hidden = false;
+			else
+				m_Hidden = true;
+		}
+
+		if (!m_Hidden)
+		{
+			if (m_Bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
+				m_Active = true;
+			else
+				m_Active = false;
+
+			if (m_Active)
+			{
+				m_MousePosGrid.x = (mousePosWindow.x - static_cast<int>(m_Bounds.getPosition().x)) / static_cast<unsigned>(m_GridSize);
+				m_MousePosGrid.y = (mousePosWindow.y - static_cast<int>(m_Bounds.getPosition().y)) / static_cast<unsigned>(m_GridSize);
+				m_Selector.setPosition(
+					m_Bounds.getPosition().x + m_MousePosGrid.x * m_GridSize,
+					m_Bounds.getPosition().y + m_MousePosGrid.y * m_GridSize
+				);
+
+				m_TextureRect.left = static_cast<int>(m_Selector.getPosition().x - m_Bounds.getPosition().x);
+				m_TextureRect.top = static_cast<int>(m_Selector.getPosition().y - m_Bounds.getPosition().y);
+			}
+		}
+		
+	}
+
+	void TextureSelector::render(sf::RenderTarget& target)
+	{
+		
+
+		if (!m_Hidden)
+		{
+			target.draw(m_Bounds);
+			target.draw(m_Sheet);
+
+			if (m_Active)
+				target.draw(m_Selector);
+		}
+
+		m_HideBtn->render(target);
+	}
+
 }

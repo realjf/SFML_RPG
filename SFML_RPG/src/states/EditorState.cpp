@@ -7,11 +7,12 @@ EditorState::EditorState(StateData* stateData)
 	initVariables();
 	initBackground();
 	initFonts();
+	initText();
 	initKeybinds();
 	initPauseMenu();
 	initButtons();
-	initGui();
 	initTileMap();
+	initGui();
 }
 
 EditorState::~EditorState()
@@ -22,6 +23,7 @@ EditorState::~EditorState()
 	}
 	delete m_Pmenu;
 	delete m_TileMap;
+	delete m_TextureSelector;
 }
 
 void EditorState::update(const float& dt)
@@ -34,6 +36,7 @@ void EditorState::update(const float& dt)
 	{
 		updateButtons();
 		updateGui();
+		updateEditorInput(dt);
 	}
 	else {
 		m_Pmenu->update(m_MousePosView);
@@ -46,10 +49,10 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = m_Window;
 
+	m_TileMap->render(*target);
+
 	renderButtons(*target);
 	renderGui(*target);
-
-	m_TileMap->render(*target);
 
 	if (m_Paused)
 	{
@@ -93,17 +96,59 @@ void EditorState::updatePauseMenuButtons()
 
 void EditorState::updateGui()
 {
-	m_SelectorRect.setPosition(m_MousePosView);
+	m_TextureSelector->update(m_MousePosWindow);
+
+	if (!m_TextureSelector->getActive())
+	{
+		m_SelectorRect.setTextureRect(m_TextureRect);
+		m_SelectorRect.setPosition(m_MousePosGrid.x * m_StateData->m_GridSize, m_MousePosGrid.y * m_StateData->m_GridSize);
+	}
+
+	m_CursorText.setPosition(m_MousePosView.x + 100.f, m_MousePosView.y - 50.f);
+	std::stringstream ss;
+	ss << m_MousePosView.x << " " << m_MousePosView.y << std::endl 
+		<< m_MousePosGrid.x << " " << m_MousePosGrid.y << std::endl
+		<< m_TextureRect.left << " " << m_TextureRect.top;
+	m_CursorText.setString(ss.str());
+	
+	
 }
 
 void EditorState::renderGui(sf::RenderTarget& target)
 {
-	target.draw(m_SelectorRect);
+	if(!m_TextureSelector->getActive())
+		target.draw(m_SelectorRect);
+	
+	m_TextureSelector->render(target);
+	target.draw(m_CursorText);
+}
+
+void EditorState::updateEditorInput(const float& dt)
+{
+	// add a tile to the tileMap
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && getKeytime())
+	{
+		if (!m_TextureSelector->getActive())
+		{
+			m_TileMap->addTile(m_MousePosGrid.x, m_MousePosGrid.y, 0, m_TextureRect);
+		}
+		else
+		{
+			m_TextureRect = m_TextureSelector->getTextureRect();
+		}
+		
+	}
+	else  if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && getKeytime())
+	{
+		if (!m_TextureSelector->getActive())
+			m_TileMap->removeTile(m_MousePosGrid.x, m_MousePosGrid.y, 0);
+		
+	}
 }
 
 void EditorState::initVariables()
 {
-
+	m_TextureRect = sf::IntRect(0, 0, static_cast<int>(m_StateData->m_GridSize), static_cast<int>(m_StateData->m_GridSize));
 }
 
 void EditorState::initBackground()
@@ -150,13 +195,27 @@ void EditorState::initPauseMenu()
 void EditorState::initGui()
 {
 	m_SelectorRect.setSize(sf::Vector2f(m_StateData->m_GridSize, m_StateData->m_GridSize));
-	m_SelectorRect.setFillColor(sf::Color::Transparent);
+	m_SelectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	
 	m_SelectorRect.setOutlineThickness(1.f);
 	m_SelectorRect.setOutlineColor(sf::Color::Green);
+
+	m_SelectorRect.setTexture(m_TileMap->getTileSheet());
+	m_SelectorRect.setTextureRect(m_TextureRect);
+
+	m_TextureSelector = new GUI::TextureSelector(20.f, 20.f, 800.f, 400.f, m_StateData->m_GridSize, m_TileMap->getTileSheet(),
+		m_Font, "TS");
 }
 
 void EditorState::initTileMap()
 {
 	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10);
+}
+
+void EditorState::initText()
+{
+	m_CursorText.setFont(m_Font);
+	m_CursorText.setFillColor(sf::Color::White);
+	m_CursorText.setCharacterSize(12);
+	m_CursorText.setPosition(m_MousePosView.x, m_MousePosView.y);
 }
