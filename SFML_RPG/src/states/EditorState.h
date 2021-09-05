@@ -24,7 +24,7 @@ public:
 	void updateButtons();
 	void renderButtons(sf::RenderTarget& target);
 	void updatePauseMenuButtons();
-	void updateGui();
+	void updateGui(const float& dt);
 	void renderGui(sf::RenderTarget& target);
 	void updateEditorInput(const float& dt);
 
@@ -38,6 +38,7 @@ private:
 	sf::IntRect m_TextureRect;
 	sf::Text m_CursorText;
 	GUI::TextureSelector* m_TextureSelector;
+	sf::RectangleShape m_Sidebar;
 
 	void initVariables();
 	void initBackground();

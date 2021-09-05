@@ -26,7 +26,7 @@ namespace GUI {
 		m_Text.setCharacterSize(characterSize);
 		m_Text.setPosition(
 			m_Shape.getPosition().x + (m_Shape.getGlobalBounds().width / 2.f) - m_Text.getGlobalBounds().width / 2.f,
-			m_Shape.getPosition().y + (m_Shape.getGlobalBounds().height / 2.f) - m_Text.getGlobalBounds().height / 2.f
+			m_Shape.getPosition().y
 		);
 
 		m_IdleColor = idleColor;
@@ -225,11 +225,12 @@ namespace GUI {
 
 	TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, 
 		const sf::Texture* textureSheet, sf::Font& font, std::string text)
+		: m_KeytimeMax(1.f), m_Keytime(0.f)
 	{
 		m_Active = false;
 		m_GridSize = gridSize;
 		m_Hidden = false;
-		float offset = 60.f;
+		float offset = 100.f;
 
 		m_Bounds.setSize(sf::Vector2f(width, height));
 		m_Bounds.setPosition(x + offset, y);
@@ -259,9 +260,9 @@ namespace GUI {
 		m_TextureRect.height = static_cast<int>(gridSize);
 		
 		m_HideBtn = new GUI::Button(y, x, 50.f, 50.f,
-			&font, text, 30,
-			sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-			sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+			&font, text, 24,
+			sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(255, 255, 255, 50),
+			sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));
 	}
 
 	TextureSelector::~TextureSelector()
@@ -279,11 +280,13 @@ namespace GUI {
 		return m_TextureRect;
 	}
 
-	void TextureSelector::update(const sf::Vector2i& mousePosWindow)
+	void TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
 	{
+		updateKeytime(dt);
+
 		m_HideBtn->update(static_cast<sf::Vector2f>(mousePosWindow));
 
-		if (m_HideBtn->isPressed())
+		if (m_HideBtn->isPressed() && getKeytime())
 		{
 			if (m_Hidden)
 				m_Hidden = false;
@@ -328,6 +331,23 @@ namespace GUI {
 		}
 
 		m_HideBtn->render(target);
+	}
+
+	void TextureSelector::updateKeytime(const float& dt)
+	{
+		if (m_Keytime < m_KeytimeMax)
+			m_Keytime += 10.f * dt;
+	}
+
+	const bool TextureSelector::getKeytime()
+	{
+		if (m_Keytime >= m_KeytimeMax)
+		{
+			m_Keytime = 0.f;
+			return true;
+		}
+
+		return false;
 	}
 
 }

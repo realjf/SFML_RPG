@@ -130,5 +130,5 @@ void GameState::initPauseMenu()
 
 void GameState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10);
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10, "resources/images/tiles/tilesheet1.png");
 }

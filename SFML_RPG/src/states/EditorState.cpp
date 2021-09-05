@@ -35,7 +35,7 @@ void EditorState::update(const float& dt)
 	if (!m_Paused)
 	{
 		updateButtons();
-		updateGui();
+		updateGui(dt);
 		updateEditorInput(dt);
 	}
 	else {
@@ -92,11 +92,17 @@ void EditorState::updatePauseMenuButtons()
 {
 	if (m_Pmenu->isButtonPressed("QUIT"))
 		endState();
+
+	if (m_Pmenu->isButtonPressed("SAVE"))
+		m_TileMap->saveToFile("Text.slmp");
+
+	if (m_Pmenu->isButtonPressed("LOAD"))
+		m_TileMap->loadFromFile("Text.slmp");
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float& dt)
 {
-	m_TextureSelector->update(m_MousePosWindow);
+	m_TextureSelector->update(m_MousePosWindow, dt);
 
 	if (!m_TextureSelector->getActive())
 	{
@@ -121,6 +127,7 @@ void EditorState::renderGui(sf::RenderTarget& target)
 	
 	m_TextureSelector->render(target);
 	target.draw(m_CursorText);
+	target.draw(m_Sidebar);
 }
 
 void EditorState::updateEditorInput(const float& dt)
@@ -128,20 +135,25 @@ void EditorState::updateEditorInput(const float& dt)
 	// add a tile to the tileMap
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && getKeytime())
 	{
-		if (!m_TextureSelector->getActive())
+		if (!m_Sidebar.getGlobalBounds().contains(sf::Vector2f(m_MousePosWindow)))
 		{
-			m_TileMap->addTile(m_MousePosGrid.x, m_MousePosGrid.y, 0, m_TextureRect);
+			if (!m_TextureSelector->getActive())
+			{
+				m_TileMap->addTile(m_MousePosGrid.x, m_MousePosGrid.y, 0, m_TextureRect);
+			}
+			else
+			{
+				m_TextureRect = m_TextureSelector->getTextureRect();
+			}
 		}
-		else
-		{
-			m_TextureRect = m_TextureSelector->getTextureRect();
-		}
-		
 	}
 	else  if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && getKeytime())
 	{
-		if (!m_TextureSelector->getActive())
-			m_TileMap->removeTile(m_MousePosGrid.x, m_MousePosGrid.y, 0);
+		if (!m_Sidebar.getGlobalBounds().contains(sf::Vector2f(m_MousePosWindow)))
+		{
+			if (!m_TextureSelector->getActive())
+				m_TileMap->removeTile(m_MousePosGrid.x, m_MousePosGrid.y, 0);
+		}
 		
 	}
 }
@@ -190,10 +202,17 @@ void EditorState::initPauseMenu()
 {
 	m_Pmenu = new PauseMenu(*m_Window, m_Font);
 	m_Pmenu->addButton("QUIT", 800.f, "Quit");
+	m_Pmenu->addButton("SAVE", 500.f, "Save");
+	m_Pmenu->addButton("LOAD", 400.f, "Load");
 }
 
 void EditorState::initGui()
 {
+	m_Sidebar.setSize(sf::Vector2f(80.f, static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height)));
+	m_Sidebar.setFillColor(sf::Color(50, 50, 50, 100));
+	m_Sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
+	m_Sidebar.setOutlineThickness(1.f);
+
 	m_SelectorRect.setSize(sf::Vector2f(m_StateData->m_GridSize, m_StateData->m_GridSize));
 	m_SelectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	
@@ -209,7 +228,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10);
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10, "resources/images/tiles/tilesheet1.png");
 }
 
 void EditorState::initText()

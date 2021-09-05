@@ -150,13 +150,13 @@ void SettingsState::initFonts()
 void SettingsState::initGui()
 {
 	m_Buttons["BACK"] = new GUI::Button(
-		1500.f, 880.f, 250.f, 50.f,
+		1500.f, 880.f, 250.f, 65.f,
 		&m_Font, "Back", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	m_Buttons["APPLY"] = new GUI::Button(
-		1300.f, 880.f, 250.f, 50.f,
+		1300.f, 880.f, 250.f, 65.f,
 		&m_Font, "Apply", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));

@@ -1,30 +1,26 @@
 #pragma once
 
-#include <vector>
-#include <iostream>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
+enum TileTypes { DEFAULT = 0, DAMAGING };
 
 class Tile
 {
 public:
 	Tile();
-	Tile(float x, float y, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect);
+	Tile(unsigned gridx, unsigned gridy, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 
 	void update();
 	void render(sf::RenderTarget& target);
 
+	const std::string getAsString() const;
+
 private:
 
 protected:
 	sf::RectangleShape m_Shape;
-
+	short m_Type;
+	bool m_Collision;
 
 };
 

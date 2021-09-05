@@ -83,8 +83,10 @@ namespace GUI {
 		const bool& getActive() const;
 		const sf::IntRect& getTextureRect() const;
 
-		void update(const sf::Vector2i& mousePosWindow);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
+		void updateKeytime(const float& dt);
+		const bool getKeytime();
 
 	private:
 		sf::RectangleShape m_Bounds;
@@ -96,5 +98,7 @@ namespace GUI {
 		float m_GridSize;
 		bool m_Hidden;
 		GUI::Button* m_HideBtn;
+		float m_Keytime;
+		const float m_KeytimeMax;
 	};
 }
