@@ -8,7 +8,7 @@ public:
 	PauseMenu(sf::RenderWindow& window, sf::Font& font);
 	virtual ~PauseMenu();
 
-	void update(const sf::Vector2f& mousePos);
+	void update(const sf::Vector2i& mousePosWindow);
 	void render(sf::RenderTarget& target);
 
 	std::map<std::string, GUI::Button*>& getButtons();

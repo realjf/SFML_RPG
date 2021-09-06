@@ -56,7 +56,7 @@ void MainMenuState::updateButtons()
 {
 	for (auto &it : m_Buttons)
 	{
-		it.second->update(m_MousePosView);
+		it.second->update(m_MousePosWindow);
 	}
 
 	// new game

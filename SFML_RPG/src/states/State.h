@@ -32,7 +32,7 @@ public:
 	const bool& getQuit() const;
 	virtual void updateInput(const float& dt) = 0;
 	void endState();
-	virtual void updateMousePositions();
+	virtual void updateMousePositions(sf::View* view = NULL);
 	void pauseState();
 	void unpauseState();
 	virtual void updateKeytime(const float& dt);

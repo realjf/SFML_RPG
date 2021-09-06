@@ -30,15 +30,21 @@ void State::endState()
 	m_Quit = true;
 }
 
-void State::updateMousePositions()
+void State::updateMousePositions(sf::View* view)
 {
 	m_MousePosScreen = sf::Mouse::getPosition();
 	m_MousePosWindow = sf::Mouse::getPosition(*m_Window);
+
+	if(view)
+		m_Window->setView(*view);
+
 	m_MousePosView = m_Window->mapPixelToCoords(sf::Mouse::getPosition(*m_Window));
 	m_MousePosGrid = sf::Vector2u(
 		static_cast<unsigned>(m_MousePosView.x) / static_cast<unsigned>(m_GridSize), 
 		static_cast<unsigned>(m_MousePosView.y) / static_cast<unsigned>(m_GridSize)
 	);
+
+	m_Window->setView(m_Window->getDefaultView());
 }
 
 void State::pauseState()

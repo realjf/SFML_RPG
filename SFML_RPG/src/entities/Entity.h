@@ -10,11 +10,18 @@ public:
 	Entity();
 	virtual ~Entity();
 
-	virtual void update(const float& dt);
-	virtual void render(sf::RenderTarget& target);
+	virtual void update(const float& dt) = 0;
+	virtual void render(sf::RenderTarget& target) = 0;
 
 	virtual void move(const float x, const float y, const float& dt);
 	virtual void setPosition(const float x, const float y);
+	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::FloatRect getGlobalBounds() const;
+	virtual const sf::Vector2u getGridPosition(const unsigned gridSizeU) const;
+	virtual const sf::FloatRect& getNextPositionBounds(const float& dt) const;
+	virtual void stopVelocity();
+	virtual void stopVelocityX();
+	virtual void stopVelocityY();
 
 	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);

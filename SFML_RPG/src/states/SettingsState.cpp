@@ -63,7 +63,7 @@ void SettingsState::updateGui(const float& dt)
 {
 	for (auto& it : m_Buttons)
 	{
-		it.second->update(m_MousePosView);
+		it.second->update(m_MousePosWindow);
 	}
 
 	// quit the game
@@ -81,7 +81,7 @@ void SettingsState::updateGui(const float& dt)
 
 	for (auto& it : m_DropDownLists)
 	{
-		it.second->update(m_MousePosView, dt);
+		it.second->update(m_MousePosWindow, dt);
 	}
 }
 

@@ -20,10 +20,7 @@ void Entity::update(const float& dt)
 
 void Entity::render(sf::RenderTarget& target)
 {
-	target.draw(m_Sprite);
 
-	if (m_HitboxComponent)
-		m_HitboxComponent->render(target);
 }
 
 void Entity::move(const float x, const float y, const float& dt)
@@ -36,9 +33,68 @@ void Entity::move(const float x, const float y, const float& dt)
 
 void Entity::setPosition(const float x, const float y)
 {
-	m_Sprite.setPosition(x, y);
+	if (m_HitboxComponent)
+		m_HitboxComponent->setPosition(x, y);
+	else
+		m_Sprite.setPosition(x, y);
 }
 
+
+const sf::Vector2f& Entity::getPosition() const
+{
+	if (m_HitboxComponent)
+		return m_HitboxComponent->getPosition();
+
+	return m_Sprite.getPosition();
+}
+
+const sf::FloatRect Entity::getGlobalBounds() const
+{
+	if (m_HitboxComponent)
+		return m_HitboxComponent->getGlobalBounds();
+	
+	return m_Sprite.getGlobalBounds();
+}
+
+const sf::Vector2u Entity::getGridPosition(const unsigned gridSizeU) const
+{
+	if (m_HitboxComponent)
+		return sf::Vector2u(
+			static_cast<unsigned>(m_HitboxComponent->getPosition().x) / gridSizeU, 
+			static_cast<unsigned>(m_HitboxComponent->getPosition().y) / gridSizeU
+		);
+
+	return sf::Vector2u(
+		static_cast<unsigned>(m_Sprite.getPosition().x) / gridSizeU,
+		static_cast<unsigned>(m_Sprite.getPosition().y) / gridSizeU
+	);
+}
+
+const sf::FloatRect& Entity::getNextPositionBounds(const float& dt) const
+{
+	if (m_HitboxComponent && m_MovementComponent)
+		return m_HitboxComponent->getNextPosition(m_MovementComponent->getVelocity() * dt);
+
+	return sf::FloatRect();
+}
+
+void Entity::stopVelocity()
+{
+	if (m_MovementComponent)
+		m_MovementComponent->stopVelocity();
+}
+
+void Entity::stopVelocityX()
+{
+	if (m_MovementComponent)
+		m_MovementComponent->stopVelocityX();
+}
+
+void Entity::stopVelocityY()
+{
+	if (m_MovementComponent)
+		m_MovementComponent->stopVelocityY();
+}
 
 void Entity::setTexture(sf::Texture& texture)
 {

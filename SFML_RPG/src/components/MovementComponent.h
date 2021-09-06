@@ -24,6 +24,9 @@ public:
 	const float& getMaxVelocity() const;
 
 	const bool getState(const short unsigned state) const;
+	void stopVelocity();
+	void stopVelocityX();
+	void stopVelocityY();
 
 private:
 	sf::Sprite& m_Sprite;

@@ -14,6 +14,10 @@ public:
 	void render(sf::RenderTarget& target);
 
 	const std::string getAsString() const;
+	const sf::Vector2f& getPosition() const;
+	const bool& getCollision() const;
+	const bool intersects(const sf::FloatRect bounds) const;
+	const sf::FloatRect getGlobalBounds() const;
 
 private:
 

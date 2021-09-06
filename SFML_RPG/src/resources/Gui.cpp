@@ -53,11 +53,11 @@ namespace GUI {
 		target.draw(m_Text);
 	}
 
-	void Button::update(const sf::Vector2f& mousePos)
+	void Button::update(const sf::Vector2i& mousePosWindow)
 	{
 		m_ButtonState = BTN_IDLE;
 
-		if (m_Shape.getGlobalBounds().contains(mousePos))
+		if (m_Shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 		{
 			m_ButtonState = BTN_HOVER;
 
@@ -153,11 +153,11 @@ namespace GUI {
 		}
 	}
 
-	void DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
+	void DropDownList::update(const sf::Vector2i& mousePosWindow, const float& dt)
 	{
 		updateKeytime(dt);
 
-		m_ActiveElement->update(mousePos);
+		m_ActiveElement->update(mousePosWindow);
 
 		if (m_ActiveElement->isPressed() && getKeytime())
 		{
@@ -171,7 +171,7 @@ namespace GUI {
 		{
 			for (auto& i : m_List)
 			{
-				i->update(mousePos);
+				i->update(mousePosWindow);
 
 				if (i->isPressed() && getKeytime())
 				{
@@ -284,7 +284,7 @@ namespace GUI {
 	{
 		updateKeytime(dt);
 
-		m_HideBtn->update(static_cast<sf::Vector2f>(mousePosWindow));
+		m_HideBtn->update(mousePosWindow);
 
 		if (m_HideBtn->isPressed() && getKeytime())
 		{

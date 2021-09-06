@@ -21,7 +21,7 @@ namespace GUI {
 		virtual ~Button();
 
 		void render(sf::RenderTarget& target);
-		void update(const sf::Vector2f& mousePos);
+		void update(const sf::Vector2i& mousePosWindow);
 		
 
 		const bool isPressed() const;
@@ -59,7 +59,7 @@ namespace GUI {
 		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned nrOfElements, unsigned defaultIndex = 0);
 		~DropDownList();
 
-		void update(const sf::Vector2f& mousePos, const float& dt);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
 		const bool getKeytime();
 		void updateKeytime(const float& dt);

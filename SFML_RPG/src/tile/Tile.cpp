@@ -44,3 +44,23 @@ const std::string Tile::getAsString() const
 
 	return ss.str();
 }
+
+const sf::Vector2f& Tile::getPosition() const
+{
+	return m_Shape.getPosition();
+}
+
+const bool& Tile::getCollision() const
+{
+	return m_Collision;
+}
+
+const bool Tile::intersects(const sf::FloatRect bounds) const
+{
+	return m_Shape.getGlobalBounds().intersects(bounds);
+}
+
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return m_Shape.getGlobalBounds();
+}

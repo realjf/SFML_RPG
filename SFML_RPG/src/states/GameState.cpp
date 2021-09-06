@@ -4,6 +4,8 @@
 GameState::GameState(StateData* stateData)
 	: State(stateData)
 {
+	initDeferredRender();
+	initView();
 	initKeybinds();
 	initFonts();
 	initTextures();
@@ -21,19 +23,23 @@ GameState::~GameState()
 
 void GameState::update(const float& dt)
 {
-	updateMousePositions();
-	updateInput(dt);
+	updateMousePositions(&m_View);
 	updateKeytime(dt);
+	updateInput(dt);
+	
 
 	if (!m_Paused) 
 	{	
+		updateView(dt);
 		updatePlayerInput(dt);
 
 		m_Player->update(dt);
+
+		updateTileMap(dt);
 	}
 	else { // paused update
 
-		m_Pmenu->update(m_MousePosView);
+		m_Pmenu->update(m_MousePosWindow);
 		updatePauseMenuButtons();
 	}
 }
@@ -43,14 +49,24 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = m_Window;
 
-	//m_Map.render(*target);
+	m_RenderTexture.clear();
 
-	m_Player->render(*target);
+	m_RenderTexture.setView(m_View);
+	m_TileMap->render(m_RenderTexture, m_Player);
+
+	m_Player->render(m_RenderTexture);
 
 	if (m_Paused)
 	{
-		m_Pmenu->render(*target);
+		m_RenderTexture.setView(m_RenderTexture.getDefaultView());
+		m_Pmenu->render(m_RenderTexture);
 	}
+
+	// final render
+	m_RenderTexture.display();
+	//m_RenderSprite.setTexture(m_RenderTexture.getTexture());
+	target->draw(m_RenderSprite);
+
 }
 
 void GameState::updatePlayerInput(const float& dt)
@@ -81,6 +97,51 @@ void GameState::updatePauseMenuButtons()
 {
 	if (m_Pmenu->isButtonPressed("QUIT"))
 		endState();
+}
+
+void GameState::updateView(const float& dt)
+{
+	m_View.setCenter(std::floor(m_Player->getPosition().x), std::floor(m_Player->getPosition().y));
+}
+
+void GameState::updateTileMap(const float& dt)
+{
+	m_TileMap->update();
+	m_TileMap->updateCollision(m_Player, dt);
+}
+
+void GameState::initDeferredRender()
+{
+	m_RenderTexture.create(
+		m_StateData->m_GfxSettings->m_Resolution.width,
+		m_StateData->m_GfxSettings->m_Resolution.height
+	);
+
+	m_RenderSprite.setTexture(m_RenderTexture.getTexture());
+	m_RenderSprite.setTextureRect(
+		sf::IntRect(
+			0, 
+			0, 
+			m_StateData->m_GfxSettings->m_Resolution.width,
+			m_StateData->m_GfxSettings->m_Resolution.height
+		)
+	);
+}
+
+void GameState::initView()
+{
+	m_View.setSize(
+		sf::Vector2f(
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.width),
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height)
+		)
+	);
+	m_View.setCenter(
+		sf::Vector2f(
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.width) / 2.f,
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height) / 2.f
+		)
+	);
 }
 
 void GameState::initKeybinds()
@@ -131,4 +192,5 @@ void GameState::initPauseMenu()
 void GameState::initTileMap()
 {
 	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10, "resources/images/tiles/tilesheet1.png");
+	m_TileMap->loadFromFile("Text.slmp");
 }

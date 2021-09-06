@@ -31,6 +31,14 @@ void Player::update(const float& dt)
 	m_HitboxComponent->update();
 }
 
+void Player::render(sf::RenderTarget& target)
+{
+	target.draw(m_Sprite);
+
+	if (m_HitboxComponent)
+		m_HitboxComponent->render(target);
+}
+
 void Player::updateAnimation(const float& dt)
 {
 	if (m_Attacking)

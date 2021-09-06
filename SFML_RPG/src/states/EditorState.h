@@ -29,6 +29,7 @@ public:
 	void updateEditorInput(const float& dt);
 
 private:
+	sf::View m_View;
 	sf::Font m_Font;
 	PauseMenu* m_Pmenu;
 	TileMap* m_TileMap;
@@ -39,8 +40,14 @@ private:
 	sf::Text m_CursorText;
 	GUI::TextureSelector* m_TextureSelector;
 	sf::RectangleShape m_Sidebar;
+	
+
+	bool m_Collision;
+	short m_Type;
+	float m_CameraSpeed;
 
 	void initVariables();
+	void initView();
 	void initBackground();
 	void initKeybinds();
 	void initFonts();

@@ -5,6 +5,7 @@ EditorState::EditorState(StateData* stateData)
 	: State(stateData)
 {
 	initVariables();
+	initView();
 	initBackground();
 	initFonts();
 	initText();
@@ -28,7 +29,7 @@ EditorState::~EditorState()
 
 void EditorState::update(const float& dt)
 {
-	updateMousePositions();
+	updateMousePositions(&m_View);
 	updateKeytime(dt);
 	updateInput(dt);
 
@@ -39,7 +40,7 @@ void EditorState::update(const float& dt)
 		updateEditorInput(dt);
 	}
 	else {
-		m_Pmenu->update(m_MousePosView);
+		m_Pmenu->update(m_MousePosWindow);
 		updatePauseMenuButtons();
 	}
 }
@@ -49,13 +50,17 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = m_Window;
 
+	target->setView(m_View);
 	m_TileMap->render(*target);
+
+	target->setView(m_Window->getDefaultView());
 
 	renderButtons(*target);
 	renderGui(*target);
 
 	if (m_Paused)
 	{
+		target->setView(m_Window->getDefaultView());
 		m_Pmenu->render(*target);
 	}
 }
@@ -76,7 +81,7 @@ void EditorState::updateButtons()
 {
 	for (auto& it : m_Buttons)
 	{
-		it.second->update(m_MousePosView);
+		it.second->update(m_MousePosWindow);
 	}
 }
 
@@ -112,9 +117,11 @@ void EditorState::updateGui(const float& dt)
 
 	m_CursorText.setPosition(m_MousePosView.x + 100.f, m_MousePosView.y - 50.f);
 	std::stringstream ss;
-	ss << m_MousePosView.x << " " << m_MousePosView.y << std::endl 
+	ss << m_MousePosView.x << " " << m_MousePosView.y << std::endl
 		<< m_MousePosGrid.x << " " << m_MousePosGrid.y << std::endl
-		<< m_TextureRect.left << " " << m_TextureRect.top;
+		<< m_TextureRect.left << " " << m_TextureRect.top << std::endl
+		<< "collision: " << m_Collision << std::endl
+		<< "type: " << m_Type << std::endl;
 	m_CursorText.setString(ss.str());
 	
 	
@@ -122,16 +129,39 @@ void EditorState::updateGui(const float& dt)
 
 void EditorState::renderGui(sf::RenderTarget& target)
 {
-	if(!m_TextureSelector->getActive())
+	if (!m_TextureSelector->getActive())
+	{
+		target.setView(m_View);
 		target.draw(m_SelectorRect);
-	
+	}
+
+	target.setView(m_Window->getDefaultView());
 	m_TextureSelector->render(target);
-	target.draw(m_CursorText);
 	target.draw(m_Sidebar);
+
+	target.setView(m_View);
+	target.draw(m_CursorText);
+	
 }
 
 void EditorState::updateEditorInput(const float& dt)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_CAMERA_UP"))))
+	{
+		m_View.move(0.f, -m_CameraSpeed * dt);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_CAMERA_DOWN"))))
+	{
+		m_View.move(0.f, m_CameraSpeed * dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_CAMERA_LEFT"))))
+	{
+		m_View.move(-m_CameraSpeed * dt, 0.f);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_CAMERA_RIGHT"))))
+	{
+		m_View.move(m_CameraSpeed * dt, 0.f);
+	}
 	// add a tile to the tileMap
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && getKeytime())
 	{
@@ -139,7 +169,7 @@ void EditorState::updateEditorInput(const float& dt)
 		{
 			if (!m_TextureSelector->getActive())
 			{
-				m_TileMap->addTile(m_MousePosGrid.x, m_MousePosGrid.y, 0, m_TextureRect);
+				m_TileMap->addTile(m_MousePosGrid.x, m_MousePosGrid.y, 0, m_TextureRect, m_Collision, m_Type);
 			}
 			else
 			{
@@ -156,11 +186,45 @@ void EditorState::updateEditorInput(const float& dt)
 		}
 		
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("TOGGLE_COLLISION"))) && getKeytime())
+	{
+		if (m_Collision)
+			m_Collision = false;
+		else
+			m_Collision = true;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("INCREASE_TYPE"))) && getKeytime())
+	{
+		++m_Type;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("DECREASE_TYPE"))) && getKeytime())
+	{
+		if(m_Type > 0)
+			--m_Type;
+	}
 }
 
 void EditorState::initVariables()
 {
 	m_TextureRect = sf::IntRect(0, 0, static_cast<int>(m_StateData->m_GridSize), static_cast<int>(m_StateData->m_GridSize));
+	m_Collision = false;
+	m_Type = TileTypes::DEFAULT;
+	m_CameraSpeed = 100.f;
+}
+
+void EditorState::initView()
+{
+	m_View.setSize(
+		sf::Vector2f(
+			m_StateData->m_GfxSettings->m_Resolution.width, 
+			m_StateData->m_GfxSettings->m_Resolution.height)
+	);
+	m_View.setCenter(
+		m_StateData->m_GfxSettings->m_Resolution.width / 2.f, 
+		m_StateData->m_GfxSettings->m_Resolution.height / 2.f
+	);
+
 }
 
 void EditorState::initBackground()
