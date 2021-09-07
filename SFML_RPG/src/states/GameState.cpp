@@ -33,9 +33,9 @@ void GameState::update(const float& dt)
 		updateView(dt);
 		updatePlayerInput(dt);
 
-		m_Player->update(dt);
-
 		updateTileMap(dt);
+		m_Player->update(dt);
+		
 	}
 	else { // paused update
 

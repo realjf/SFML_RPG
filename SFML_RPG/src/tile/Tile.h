@@ -7,7 +7,7 @@ class Tile
 {
 public:
 	Tile();
-	Tile(unsigned gridx, unsigned gridy, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect, bool collision = false, short type = TileTypes::DEFAULT);
+	Tile(int gridx, int gridy, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 
 	void update();

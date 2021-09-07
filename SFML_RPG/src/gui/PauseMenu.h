@@ -2,6 +2,8 @@
 
 #include "resources/Gui.h"
 
+class Gui;
+
 class PauseMenu
 {
 public:

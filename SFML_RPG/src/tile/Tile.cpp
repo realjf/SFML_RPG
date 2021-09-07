@@ -7,7 +7,7 @@ Tile::Tile()
 	m_Type = 0;
 }
 
-Tile::Tile(unsigned gridx, unsigned gridy, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect, bool collision, short type)
+Tile::Tile(int gridx, int gridy, float gridSizeF, sf::Texture& texture, const sf::IntRect& textureRect, bool collision, short type)
 {
 	m_Shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
 	m_Shape.setFillColor(sf::Color::White);

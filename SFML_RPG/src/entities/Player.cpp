@@ -7,7 +7,7 @@ Player::Player(float x, float y, sf::Texture& textureSheet)
 
 	setPosition(x, y);
 
-	createHitboxComponent(m_Sprite, 86.f, 66.f, 86.f, 114.f);
+	createHitboxComponent(m_Sprite, 86.f, 68.f, 86.f, 100.f);
 	createMovementComponent(350.f, 15.f, 5.f);
 	createAnimationComponent(textureSheet);
 

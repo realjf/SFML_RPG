@@ -131,7 +131,7 @@ namespace GUI {
 		);
 
 
-		for (size_t i = 0; i < nrOfElements; i++)
+		for (unsigned i = 0; i < nrOfElements; i++)
 		{
 			m_List.push_back(
 				new GUI::Button(x, y + ((i+1) * height), width, height,
@@ -243,11 +243,25 @@ namespace GUI {
 
 		if (m_Sheet.getGlobalBounds().width > m_Bounds.getGlobalBounds().width)
 		{
-			m_Sheet.setTextureRect(sf::IntRect(0, 0, m_Bounds.getGlobalBounds().width, m_Sheet.getGlobalBounds().height));
+			m_Sheet.setTextureRect(
+				sf::IntRect(
+					0, 
+					0, 
+					static_cast<int>(m_Bounds.getGlobalBounds().width), 
+					static_cast<int>(m_Sheet.getGlobalBounds().height)
+				)
+			);
 		}
 		if (m_Sheet.getGlobalBounds().height > m_Bounds.getGlobalBounds().height)
 		{
-			m_Sheet.setTextureRect(sf::IntRect(0, 0, m_Sheet.getGlobalBounds().width, m_Bounds.getGlobalBounds().height));
+			m_Sheet.setTextureRect(
+				sf::IntRect(
+					0, 
+					0, 
+					static_cast<int>(m_Sheet.getGlobalBounds().width),
+					static_cast<int>(m_Bounds.getGlobalBounds().height)
+				)
+			);
 		}
 
 		m_Selector.setPosition(x + offset, y);

@@ -217,12 +217,13 @@ void EditorState::initView()
 {
 	m_View.setSize(
 		sf::Vector2f(
-			m_StateData->m_GfxSettings->m_Resolution.width, 
-			m_StateData->m_GfxSettings->m_Resolution.height)
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.width),
+			static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height)
+		)
 	);
 	m_View.setCenter(
-		m_StateData->m_GfxSettings->m_Resolution.width / 2.f, 
-		m_StateData->m_GfxSettings->m_Resolution.height / 2.f
+		static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.width) / 2.f, 
+		static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height) / 2.f
 	);
 
 }

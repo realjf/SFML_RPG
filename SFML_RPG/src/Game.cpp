@@ -47,15 +47,19 @@ void Game::update()
 {
 	updateSFMLEvents();
 
-	if (!m_States.empty() && m_Window->hasFocus())
+	if (!m_States.empty())
 	{
-		m_States.top()->update(m_Dt);
-		if (m_States.top()->getQuit())
+		if (m_Window->hasFocus())
 		{
-			m_States.top()->endState();
-			delete m_States.top();
-			m_States.pop();
+			m_States.top()->update(m_Dt);
+			if (m_States.top()->getQuit())
+			{
+				m_States.top()->endState();
+				delete m_States.top();
+				m_States.pop();
+			}
 		}
+		
 	}
 	// APP END
 	else
