@@ -45,6 +45,7 @@ private:
 	bool m_Collision;
 	short m_Type;
 	float m_CameraSpeed;
+	int m_Layer;
 
 	void initVariables();
 	void initView();

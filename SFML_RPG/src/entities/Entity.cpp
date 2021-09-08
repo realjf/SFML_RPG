@@ -56,17 +56,17 @@ const sf::FloatRect Entity::getGlobalBounds() const
 	return m_Sprite.getGlobalBounds();
 }
 
-const sf::Vector2u Entity::getGridPosition(const unsigned gridSizeU) const
+const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {
 	if (m_HitboxComponent)
-		return sf::Vector2u(
-			static_cast<unsigned>(m_HitboxComponent->getPosition().x) / gridSizeU, 
-			static_cast<unsigned>(m_HitboxComponent->getPosition().y) / gridSizeU
+		return sf::Vector2i(
+			static_cast<int>(m_HitboxComponent->getPosition().x) / gridSizeI,
+			static_cast<int>(m_HitboxComponent->getPosition().y) / gridSizeI
 		);
 
-	return sf::Vector2u(
-		static_cast<unsigned>(m_Sprite.getPosition().x) / gridSizeU,
-		static_cast<unsigned>(m_Sprite.getPosition().y) / gridSizeU
+	return sf::Vector2i(
+		static_cast<int>(m_Sprite.getPosition().x) / gridSizeI,
+		static_cast<int>(m_Sprite.getPosition().y) / gridSizeI
 	);
 }
 

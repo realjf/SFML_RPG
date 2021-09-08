@@ -52,7 +52,7 @@ void GameState::render(sf::RenderTarget* target)
 	m_RenderTexture.clear();
 
 	m_RenderTexture.setView(m_View);
-	m_TileMap->render(m_RenderTexture, m_Player);
+	m_TileMap->render(m_RenderTexture, m_Player->getGridPosition(static_cast<int>(m_StateData->m_GridSize)));
 
 	m_Player->render(m_RenderTexture);
 

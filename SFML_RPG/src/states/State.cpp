@@ -11,7 +11,7 @@ State::State(StateData* stateData)
 	m_SupportedKeys = stateData->m_SupportedKeys;
 	m_States = stateData->m_States;
 	m_Keytime = 0.f;
-	m_KeytimeMax = 10.f;
+	m_KeytimeMax = 50.f;
 	m_GridSize = stateData->m_GridSize;
 }
 
@@ -39,9 +39,9 @@ void State::updateMousePositions(sf::View* view)
 		m_Window->setView(*view);
 
 	m_MousePosView = m_Window->mapPixelToCoords(sf::Mouse::getPosition(*m_Window));
-	m_MousePosGrid = sf::Vector2u(
-		static_cast<unsigned>(m_MousePosView.x) / static_cast<unsigned>(m_GridSize), 
-		static_cast<unsigned>(m_MousePosView.y) / static_cast<unsigned>(m_GridSize)
+	m_MousePosGrid = sf::Vector2i(
+		static_cast<int>(m_MousePosView.x) / static_cast<int>(m_GridSize),
+		static_cast<int>(m_MousePosView.y) / static_cast<int>(m_GridSize)
 	);
 
 	m_Window->setView(m_Window->getDefaultView());

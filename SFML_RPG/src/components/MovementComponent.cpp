@@ -18,7 +18,7 @@ void MovementComponent::update(const float& dt)
 		if (m_Velocity.x > m_MaxVelocity)
 			m_Velocity.x = m_MaxVelocity;
 
-		m_Velocity.x -= m_Deceleration;
+		m_Velocity.x -= m_Deceleration * dt;
 		if (m_Velocity.x < 0.f)
 			m_Velocity.x = 0.f;
 	}
@@ -27,7 +27,7 @@ void MovementComponent::update(const float& dt)
 		if (m_Velocity.x < -m_MaxVelocity)
 			m_Velocity.x = -m_MaxVelocity;
 
-		m_Velocity.x += m_Deceleration;
+		m_Velocity.x += m_Deceleration * dt;
 		if (m_Velocity.x > 0.f)
 			m_Velocity.x = 0.f;
 	}
@@ -36,7 +36,7 @@ void MovementComponent::update(const float& dt)
 		if (m_Velocity.y > m_MaxVelocity)
 			m_Velocity.y = m_MaxVelocity;
 
-		m_Velocity.y -= m_Deceleration;
+		m_Velocity.y -= m_Deceleration * dt;
 		if (m_Velocity.y < 0.f)
 			m_Velocity.y = 0.f;
 	}
@@ -45,7 +45,7 @@ void MovementComponent::update(const float& dt)
 		if (m_Velocity.y < -m_MaxVelocity)
 			m_Velocity.y = -m_MaxVelocity;
 
-		m_Velocity.y += m_Deceleration;
+		m_Velocity.y += m_Deceleration * dt;
 		if (m_Velocity.y > 0.f)
 			m_Velocity.y = 0.f;
 	}
@@ -55,8 +55,8 @@ void MovementComponent::update(const float& dt)
 
 void MovementComponent::move(const float x, const float y, const float& dt)
 {
-	m_Velocity.x += m_Acceleration * x;
-	m_Velocity.y += m_Acceleration * y;
+	m_Velocity.x += m_Acceleration * x * dt;
+	m_Velocity.y += m_Acceleration * y * dt;
 }
 
 const sf::Vector2f& MovementComponent::getVelocity() const

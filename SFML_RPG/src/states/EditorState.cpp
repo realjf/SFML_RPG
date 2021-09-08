@@ -51,7 +51,7 @@ void EditorState::render(sf::RenderTarget* target)
 		target = m_Window;
 
 	target->setView(m_View);
-	m_TileMap->render(*target);
+	m_TileMap->render(*target, m_MousePosGrid);
 
 	target->setView(m_Window->getDefaultView());
 
@@ -121,7 +121,8 @@ void EditorState::updateGui(const float& dt)
 		<< m_MousePosGrid.x << " " << m_MousePosGrid.y << std::endl
 		<< m_TextureRect.left << " " << m_TextureRect.top << std::endl
 		<< "collision: " << m_Collision << std::endl
-		<< "type: " << m_Type << std::endl;
+		<< "type: " << m_Type << std::endl
+		<< "tiles: " << m_TileMap->getLayerSize(m_MousePosGrid.x, m_MousePosGrid.y, m_Layer);
 	m_CursorText.setString(ss.str());
 	
 	
@@ -211,6 +212,7 @@ void EditorState::initVariables()
 	m_Collision = false;
 	m_Type = TileTypes::DEFAULT;
 	m_CameraSpeed = 100.f;
+	m_Layer = 0;
 }
 
 void EditorState::initView()
