@@ -296,7 +296,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 1000, 1000, "resources/images/tiles/tilesheet1.png");
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 100, 100, "resources/images/tiles/tilesheet1.png");
 }
 
 void EditorState::initText()

@@ -193,6 +193,6 @@ void GameState::initPauseMenu()
 
 void GameState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 1000, 1000, "resources/images/tiles/tilesheet1.png");
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 100, 100, "resources/images/tiles/tilesheet1.png");
 	m_TileMap->loadFromFile("Text.slmp");
 }

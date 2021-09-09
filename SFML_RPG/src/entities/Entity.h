@@ -3,11 +3,13 @@
 #include "components/MovementComponent.h"
 #include "components/AnimationComponent.h"
 #include "components/HitboxComponent.h"
+#include "components/AttributeComponent.h"
 
 
 class HitboxComponent;
 class MovementComponent;
 class AnimationComponent;
+class AttributeComponent;
 
 class Entity
 {
@@ -32,6 +34,7 @@ public:
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
 	void createAnimationComponent(sf::Texture& textureSheet);
 	void createHitboxComponent(sf::Sprite& sprite, const float offsetx, const float offsety, float width, float height);
+	void createAttributeComponent(const unsigned level);
 
 protected:
 	sf::Sprite m_Sprite;
@@ -39,6 +42,7 @@ protected:
 	MovementComponent* m_MovementComponent;
 	AnimationComponent* m_AnimationComponent;
 	HitboxComponent* m_HitboxComponent;
+	AttributeComponent* m_AttributeComponent;
 
 private:
 	void initVariables();

@@ -11,6 +11,7 @@ Entity::~Entity()
 	delete m_MovementComponent;
 	delete m_AnimationComponent;
 	delete m_HitboxComponent;
+	delete m_AttributeComponent;
 }
 
 void Entity::update(const float& dt)
@@ -116,9 +117,15 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, const float offsetx, cons
 	m_HitboxComponent = new HitboxComponent(sprite, offsetx, offsety, width, height);
 }
 
+void Entity::createAttributeComponent(const unsigned level)
+{
+	m_AttributeComponent = new AttributeComponent(level);
+}
+
 void Entity::initVariables()
 {
 	m_MovementComponent = NULL;
 	m_AnimationComponent = NULL;
 	m_HitboxComponent = NULL;
+	m_AttributeComponent = NULL;
 }
