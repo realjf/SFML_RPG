@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum TileTypes { DEFAULT = 0, DAMAGING };
+enum TileTypes { DEFAULT = 0, DAMAGING, DOODAD };
 
 class Tile
 {
@@ -18,6 +18,7 @@ public:
 	const bool& getCollision() const;
 	const bool intersects(const sf::FloatRect bounds) const;
 	const sf::FloatRect getGlobalBounds() const;
+	const short& getType() const;
 
 private:
 

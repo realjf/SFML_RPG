@@ -225,7 +225,7 @@ namespace GUI {
 
 	TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, 
 		const sf::Texture* textureSheet, sf::Font& font, std::string text)
-		: m_KeytimeMax(1.f), m_Keytime(0.f)
+		: m_KeytimeMax(50.f), m_Keytime(0.f)
 	{
 		m_Active = false;
 		m_GridSize = gridSize;
@@ -350,7 +350,7 @@ namespace GUI {
 	void TextureSelector::updateKeytime(const float& dt)
 	{
 		if (m_Keytime < m_KeytimeMax)
-			m_Keytime += 10.f * dt;
+			m_Keytime += 100.f * dt;
 	}
 
 	const bool TextureSelector::getKeytime()

@@ -86,7 +86,14 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 		{
 			for (size_t k = 0; k < m_Map[x][y][m_Layer].size(); k++)
 			{
-				m_Map[x][y][m_Layer][k]->render(target);
+				if (m_Map[x][y][m_Layer][k]->getType() == TileTypes::DOODAD)
+				{
+					m_DeferredRenderStack.push(m_Map[x][y][m_Layer][k]);
+				}
+				else {
+					m_Map[x][y][m_Layer][k]->render(target);
+				}
+				
 				if (m_Map[x][y][m_Layer][k]->getCollision())
 				{
 					m_CollisionBox.setPosition(m_Map[x][y][m_Layer][k]->getPosition());
@@ -386,4 +393,14 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 		}
 	}
 
+}
+
+void TileMap::renderDeferred(sf::RenderTarget& target)
+{
+	while (!m_DeferredRenderStack.empty())
+	{
+		m_DeferredRenderStack.top()->render(target);
+
+		m_DeferredRenderStack.pop();
+	}
 }

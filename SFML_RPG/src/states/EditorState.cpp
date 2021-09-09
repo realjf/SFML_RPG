@@ -52,6 +52,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	target->setView(m_View);
 	m_TileMap->render(*target, m_MousePosGrid);
+	m_TileMap->renderDeferred(*target);
 
 	target->setView(m_Window->getDefaultView());
 
@@ -295,7 +296,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10, "resources/images/tiles/tilesheet1.png");
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 1000, 1000, "resources/images/tiles/tilesheet1.png");
 }
 
 void EditorState::initText()

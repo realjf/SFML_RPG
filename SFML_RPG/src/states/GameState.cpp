@@ -56,6 +56,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	m_Player->render(m_RenderTexture);
 
+	m_TileMap->renderDeferred(m_RenderTexture);
+
 	if (m_Paused)
 	{
 		m_RenderTexture.setView(m_RenderTexture.getDefaultView());
@@ -191,6 +193,6 @@ void GameState::initPauseMenu()
 
 void GameState::initTileMap()
 {
-	m_TileMap = new TileMap(m_StateData->m_GridSize, 10, 10, "resources/images/tiles/tilesheet1.png");
+	m_TileMap = new TileMap(m_StateData->m_GridSize, 1000, 1000, "resources/images/tiles/tilesheet1.png");
 	m_TileMap->loadFromFile("Text.slmp");
 }

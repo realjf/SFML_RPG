@@ -25,6 +25,7 @@ public:
 	void loadFromFile(const std::string filename);
 	void clear();
 	void updateCollision(Entity* entity, const float& dt);
+	void renderDeferred(sf::RenderTarget& target);
 
 private:
 	std::vector<std::vector<std::vector< std::vector<Tile*> >>> m_Map;
@@ -36,6 +37,7 @@ private:
 	std::string m_TextureFile;
 	sf::RectangleShape m_CollisionBox;
 	sf::Vector2f m_MaxSizeWorldF;
+	std::stack<Tile*> m_DeferredRenderStack;
 
 	int m_FromX;
 	int m_ToX;
