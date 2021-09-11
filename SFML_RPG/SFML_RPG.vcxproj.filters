@@ -39,7 +39,7 @@
     <ClCompile Include="src\components\MovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\Gui.cpp">
+    <ClCompile Include="src\gui\Gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\AnimationComponent.cpp">
@@ -72,6 +72,9 @@
     <ClCompile Include="src\components\AttributeComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\PlayerGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -89,7 +92,7 @@
     <ClInclude Include="src\states\MainMenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\resources\Gui.h">
+    <ClInclude Include="src\gui\Gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\Player.h">
@@ -126,6 +129,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\AttributeComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\PlayerGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

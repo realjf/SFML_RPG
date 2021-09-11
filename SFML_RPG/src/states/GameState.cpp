@@ -11,6 +11,7 @@ GameState::GameState(StateData* stateData)
 	initTextures();
 	initPauseMenu();
 	initPlayers();
+	initPlayerGUI();
 	initTileMap();
 }
 
@@ -19,6 +20,7 @@ GameState::~GameState()
 	delete m_Player;
 	delete m_Pmenu;
 	delete m_TileMap;
+	delete m_PlayerGUI;
 }
 
 void GameState::update(const float& dt)
@@ -35,7 +37,10 @@ void GameState::update(const float& dt)
 
 		updateTileMap(dt);
 		m_Player->update(dt);
-		
+
+		//m_PlayerGUI->update(dt);
+		updatePlayerGUI(dt);
+
 	}
 	else { // paused update
 
@@ -58,9 +63,13 @@ void GameState::render(sf::RenderTarget* target)
 
 	m_TileMap->renderDeferred(m_RenderTexture);
 
+	// render gui
+	m_RenderTexture.setView(m_RenderTexture.getDefaultView());
+	m_PlayerGUI->render(m_RenderTexture);
+
 	if (m_Paused)
 	{
-		m_RenderTexture.setView(m_RenderTexture.getDefaultView());
+		// m_RenderTexture.setView(m_RenderTexture.getDefaultView());
 		m_Pmenu->render(m_RenderTexture);
 	}
 
@@ -110,6 +119,11 @@ void GameState::updateTileMap(const float& dt)
 {
 	m_TileMap->update();
 	m_TileMap->updateCollision(m_Player, dt);
+}
+
+void GameState::updatePlayerGUI(const float& dt)
+{
+	m_PlayerGUI->update(dt);
 }
 
 void GameState::initDeferredRender()
@@ -195,4 +209,9 @@ void GameState::initTileMap()
 {
 	m_TileMap = new TileMap(m_StateData->m_GridSize, 100, 100, "resources/images/tiles/tilesheet1.png");
 	m_TileMap->loadFromFile("Text.slmp");
+}
+
+void GameState::initPlayerGUI()
+{
+	m_PlayerGUI = new PlayerGUI(m_Player);
 }

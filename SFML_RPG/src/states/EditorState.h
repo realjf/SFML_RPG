@@ -1,7 +1,7 @@
 #pragma once
 
 #include "State.h"
-#include "resources/Gui.h"
+#include "gui/Gui.h"
 #include "gui/PauseMenu.h"
 #include "map/TileMap.h"
 

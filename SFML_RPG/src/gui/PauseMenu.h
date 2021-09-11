@@ -1,6 +1,6 @@
 #pragma once
 
-#include "resources/Gui.h"
+#include "gui/Gui.h"
 
 class Gui;
 

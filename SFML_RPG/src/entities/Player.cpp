@@ -112,6 +112,42 @@ void Player::updateAttack()
 	}
 }
 
+AttributeComponent* Player::getAttributeComponent()
+{
+	return m_AttributeComponent;
+}
+
+void Player::loseHP(const int hp)
+{
+	m_AttributeComponent->m_Hp -= hp;
+	
+	if (m_AttributeComponent->m_Hp < 0)
+		m_AttributeComponent->m_Hp = 0;
+}
+
+void Player::loseEXP(const unsigned exp)
+{
+	m_AttributeComponent->m_Exp -= exp;
+
+	if (m_AttributeComponent->m_Exp < 0)
+		m_AttributeComponent->m_Exp = 0;
+}
+
+void Player::gainHP(const int hp)
+{
+	m_AttributeComponent->m_Hp += hp;
+
+	if (m_AttributeComponent->m_Hp > m_AttributeComponent->m_HpMax)
+		m_AttributeComponent->m_Hp = m_AttributeComponent->m_HpMax;
+}
+
+void Player::gainEXP(const unsigned exp)
+{
+	m_AttributeComponent->m_Exp += exp;
+
+	m_AttributeComponent->gainExp(exp);
+}
+
 void Player::initVariables()
 {
 	m_Attacking = false;

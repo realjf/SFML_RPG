@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameState.h"
-#include "resources/Gui.h"
+#include "gui/Gui.h"
 #include "EditorState.h"
 #include "SettingsState.h"
 #include "resources/GraphicsSettings.h"

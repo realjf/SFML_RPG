@@ -5,7 +5,7 @@ AttributeComponent::AttributeComponent(unsigned level)
 {
 	m_Level = level;
 	m_Exp = 0;
-	m_ExpNext = static_cast<unsigned>((50 / 3) * (pow(m_Level, 3) - 6 * pow(m_Level, 2) + (m_Level * 17) - 12));
+	m_ExpNext = static_cast<unsigned>((50 / 3) * (pow(m_Level + 1, 3) - 6 * pow(m_Level + 1, 2) + ((m_Level + 1) * 17) - 12));
 	m_AttributePoints = 2;
 
 	m_Vitality = 1;

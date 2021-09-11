@@ -12,6 +12,12 @@ public:
     void render(sf::RenderTarget& target);
     void updateAnimation(const float& dt);
     void updateAttack();
+    AttributeComponent* getAttributeComponent();
+    void loseHP(const int hp);
+    void loseEXP(const unsigned exp);
+    void gainHP(const int hp);
+    void gainEXP(const unsigned exp);
+
 private:
     bool m_Attacking;
 

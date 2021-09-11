@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gui\PlayerGUI.cpp" />
     <ClCompile Include="src\components\AttributeComponent.cpp" />
     <ClCompile Include="src\resources\GraphicsSettings.cpp" />
     <ClCompile Include="src\states\SettingsState.cpp" />
@@ -98,7 +99,7 @@
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\MovementComponent.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
-    <ClCompile Include="src\resources\Gui.cpp" />
+    <ClCompile Include="src\gui\Gui.cpp" />
     <ClCompile Include="src\states\MainMenuState.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
     <ClCompile Include="src\states\GameState.cpp" />
@@ -113,6 +114,7 @@
     <ClCompile Include="src\map\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gui\PlayerGUI.h" />
     <ClInclude Include="src\components\AttributeComponent.h" />
     <ClInclude Include="src\resources\GraphicsSettings.h" />
     <ClInclude Include="src\states\SettingsState.h" />
@@ -122,7 +124,7 @@
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\MovementComponent.h" />
     <ClInclude Include="src\entities\Player.h" />
-    <ClInclude Include="src\resources\Gui.h" />
+    <ClInclude Include="src\gui\Gui.h" />
     <ClInclude Include="src\states\MainMenuState.h" />
     <ClInclude Include="src\entities\Entity.h" />
     <ClInclude Include="src\states\GameState.h" />
