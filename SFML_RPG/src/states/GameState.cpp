@@ -90,7 +90,6 @@ void GameState::updatePlayerInput(const float& dt)
 		m_Player->move(0.f, -1.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(m_Keybinds.at("MOVE_DOWN"))))
 		m_Player->move(0.f, 1.f, dt);
-
 }
 
 void GameState::updateInput(const float& dt)

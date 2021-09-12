@@ -118,7 +118,7 @@ namespace GUI {
 	}
 
 	DropDownList::DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned nrOfElements, unsigned defaultIndex)
-		: m_Font(font), m_ShowList(false), m_KeytimeMax(1.f), m_Keytime(0.f)
+		: m_Font(font), m_ShowList(false), m_KeytimeMax(30.f), m_Keytime(0.f)
 	{
 		//unsigned nrOfElements = sizeof(list) / sizeof(std::string);
 
@@ -212,7 +212,7 @@ namespace GUI {
 	void DropDownList::updateKeytime(const float& dt)
 	{
 		if (m_Keytime < m_KeytimeMax)
-			m_Keytime += 10.f * dt;
+			m_Keytime += 100.f * dt;
 	}
 
 	const unsigned short& DropDownList::getActiveElementId() const
@@ -225,12 +225,12 @@ namespace GUI {
 
 	TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, 
 		const sf::Texture* textureSheet, sf::Font& font, std::string text)
-		: m_KeytimeMax(50.f), m_Keytime(0.f)
+		: m_KeytimeMax(30.f), m_Keytime(0.f)
 	{
 		m_Active = false;
 		m_GridSize = gridSize;
 		m_Hidden = false;
-		float offset = 100.f;
+		float offset = gridSize;
 
 		m_Bounds.setSize(sf::Vector2f(width, height));
 		m_Bounds.setPosition(x + offset, y);
