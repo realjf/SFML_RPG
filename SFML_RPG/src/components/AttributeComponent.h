@@ -4,21 +4,21 @@
 class AttributeComponent
 {
 public:
-	AttributeComponent(unsigned level);
+	AttributeComponent(int level);
 	~AttributeComponent();
 
 	void updateStats(const bool reset);
 	void updateLevel();
-	void gainExp(const unsigned exp);
+	void gainExp(const int exp);
 	void update();
 	std::string debugPrint() const;
 
 public:
 	// leveling
-	unsigned m_Level;
-	unsigned m_Exp;
-	unsigned m_ExpNext;
-	unsigned m_AttributePoints;
+	int m_Level;
+	int m_Exp;
+	int m_ExpNext;
+	int m_AttributePoints;
 
 	// attributes
 	int m_Vitality;

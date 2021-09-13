@@ -34,7 +34,7 @@ public:
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
 	void createAnimationComponent(sf::Texture& textureSheet);
 	void createHitboxComponent(sf::Sprite& sprite, const float offsetx, const float offsety, float width, float height);
-	void createAttributeComponent(const unsigned level);
+	void createAttributeComponent(const int level);
 
 protected:
 	sf::Sprite m_Sprite;

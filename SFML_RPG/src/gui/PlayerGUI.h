@@ -15,8 +15,10 @@ public:
 	void render(sf::RenderTarget& target);
 	void updateHPBar();
 	void updateEXPBar();
+	void updateLevelBar();
 	void renderHPBar(sf::RenderTarget& target);
 	void renderEXPBar(sf::RenderTarget& target);
+	void renderLevelBar(sf::RenderTarget& target);
 
 private:
 	Player* m_Player;
@@ -36,9 +38,16 @@ private:
 	sf::Text m_ExpBarText;
 	std::string m_ExpBarString;
 
+	// level bar
+	sf::RectangleShape m_LevelBarBack;
+	sf::Text m_LevelBarText;
+	std::string m_LevelBarString;
+
+
 	void initFont();
 	void initHPBar();
 	void initEXPBar();
+	void initLevelBar();
 
 };
 

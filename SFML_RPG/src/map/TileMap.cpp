@@ -139,7 +139,7 @@ const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 		{
 			if (layer >= 0 && layer < m_Map[x][y].size())
 			{
-				return m_Map[x][y][layer].size();
+				return static_cast<int>(m_Map[x][y][layer].size());
 			}
 		}
 	}

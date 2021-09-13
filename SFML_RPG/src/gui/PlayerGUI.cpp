@@ -8,6 +8,7 @@ PlayerGUI::PlayerGUI(Player* player)
 	initFont();
 	initHPBar();
 	initEXPBar();
+	initLevelBar();
 }
 
 PlayerGUI::~PlayerGUI()
@@ -19,12 +20,14 @@ void PlayerGUI::update(const float& dt)
 {
 	updateHPBar();
 	updateEXPBar();
+	updateLevelBar();
 }
 
 void PlayerGUI::render(sf::RenderTarget& target)
 {
 	renderHPBar(target);
 	renderEXPBar(target);
+	renderLevelBar(target);
 }
 
 void PlayerGUI::updateHPBar()
@@ -57,6 +60,12 @@ void PlayerGUI::updateEXPBar()
 	m_ExpBarText.setString(m_ExpBarString);
 }
 
+void PlayerGUI::updateLevelBar()
+{
+	m_LevelBarString = std::to_string(m_Player->getAttributeComponent()->m_Level);
+	m_LevelBarText.setString(m_LevelBarString);
+}
+
 void PlayerGUI::renderHPBar(sf::RenderTarget& target)
 {
 	target.draw(m_HpBarBack);
@@ -71,6 +80,12 @@ void PlayerGUI::renderEXPBar(sf::RenderTarget& target)
 	target.draw(m_ExpBarText);
 }
 
+void PlayerGUI::renderLevelBar(sf::RenderTarget& target)
+{
+	target.draw(m_LevelBarBack);
+	target.draw(m_LevelBarText);
+}
+
 void PlayerGUI::initFont()
 {
 	m_Font.loadFromFile("fonts/Dosis-Light.ttf");
@@ -78,10 +93,10 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHPBar()
 {
-	float width = 300.f;
-	float height = 50.f;
+	float width = 200.f;
+	float height = 30.f;
 	float x = 20.f;
-	float y = 20.f;
+	float y = 90.f;
 	m_HpBarMaxWidth = width;
 
 
@@ -94,7 +109,7 @@ void PlayerGUI::initHPBar()
 	m_HpBarInner.setPosition(m_HpBarBack.getPosition());	
 	
 	m_HpBarText.setFont(m_Font);
-	m_HpBarText.setCharacterSize(16);
+	m_HpBarText.setCharacterSize(14);
 	m_HpBarText.setPosition(m_HpBarInner.getPosition().x + 10.f, m_HpBarInner.getPosition().y + 5.f);
 }
 
@@ -103,7 +118,7 @@ void PlayerGUI::initEXPBar()
 	float width = 200.f;
 	float height = 30.f;
 	float x = 20.f;
-	float y = 80.f;
+	float y = 60.f;
 	m_ExpBarMaxWidth = width;
 
 
@@ -116,6 +131,23 @@ void PlayerGUI::initEXPBar()
 	m_ExpBarInner.setPosition(m_ExpBarBack.getPosition());
 
 	m_ExpBarText.setFont(m_Font);
-	m_ExpBarText.setCharacterSize(14);
+	m_ExpBarText.setCharacterSize(12);
 	m_ExpBarText.setPosition(m_ExpBarInner.getPosition().x + 10.f, m_ExpBarInner.getPosition().y + 5.f);
+}
+
+void PlayerGUI::initLevelBar()
+{
+	float width = 30.f;
+	float height = 30.f;
+	float x = 20.f;
+	float y = 20.f;
+
+
+	m_LevelBarBack.setSize(sf::Vector2f(width, height));
+	m_LevelBarBack.setFillColor(sf::Color(50, 50, 50, 200));
+	m_LevelBarBack.setPosition(x, y);
+
+	m_LevelBarText.setFont(m_Font);
+	m_LevelBarText.setCharacterSize(18);
+	m_LevelBarText.setPosition(m_LevelBarBack.getPosition().x + 10.f, m_LevelBarBack.getPosition().y + 5.f);
 }

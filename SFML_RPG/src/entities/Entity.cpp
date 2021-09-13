@@ -117,7 +117,7 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, const float offsetx, cons
 	m_HitboxComponent = new HitboxComponent(sprite, offsetx, offsety, width, height);
 }
 
-void Entity::createAttributeComponent(const unsigned level)
+void Entity::createAttributeComponent(const int level)
 {
 	m_AttributeComponent = new AttributeComponent(level);
 }
