@@ -73,22 +73,4 @@ const bool State::getKeytime()
 	return false;
 }
 
-const float State::p2pX(const float perc)
-{
-	/*
-	* converts a percentage value to pixels relative to the current resolution in the x-axis
-	* @param float perc       the percentage value
-	* @param float            the calculated pixel value    
-	*/
-	return std::floor(static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.width) * (perc / 100.f));
-}
 
-const float State::p2pY(const float perc)
-{
-	/*
-	* converts a percentage value to pixels relative to the current resolution in the y-axis
-	* @param float perc       the percentage value
-	* @param float            the calculated pixel value
-	*/
-	return std::floor(static_cast<float>(m_StateData->m_GfxSettings->m_Resolution.height) * (perc / 100.f));
-}

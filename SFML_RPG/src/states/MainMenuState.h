@@ -29,6 +29,7 @@ private:
 	void initBackground();
 	void initKeybinds();
 	void initFonts();
-	void initButtons();
+	void initGui();
+	void resetGui();
 };
 

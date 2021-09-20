@@ -268,10 +268,12 @@ void EditorState::initButtons()
 
 void EditorState::initPauseMenu()
 {
-	m_Pmenu = new PauseMenu(*m_Window, m_Font);
-	m_Pmenu->addButton("QUIT", 800.f, "Quit");
-	m_Pmenu->addButton("SAVE", 500.f, "Save");
-	m_Pmenu->addButton("LOAD", 400.f, "Load");
+	const sf::VideoMode& vm = m_StateData->m_GfxSettings->m_Resolution;
+	m_Pmenu = new PauseMenu(m_StateData->m_GfxSettings->m_Resolution, m_Font);
+	
+	m_Pmenu->addButton("QUIT", GUI::p2pY(74.f, vm), GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm), GUI::calcCharSize(vm), "Quit");
+	m_Pmenu->addButton("SAVE", GUI::p2pY(46.f, vm), GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm), GUI::calcCharSize(vm), "Save");
+	m_Pmenu->addButton("LOAD", GUI::p2pY(37.f, vm), GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm), GUI::calcCharSize(vm), "Load");
 }
 
 void EditorState::initGui()

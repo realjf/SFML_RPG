@@ -28,10 +28,9 @@ private:
 	std::vector<sf::VideoMode> m_Modes;
 
 	void initVariables();
-	void initBackground();
 	void initKeybinds();
 	void initFonts();
 	void initGui();
-	void initText();
+	void resetGui();
 };
 

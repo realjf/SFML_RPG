@@ -2,6 +2,42 @@
 #include "Gui.h"
 
 namespace GUI {
+
+	const float p2pX(const float perc, const sf::VideoMode& vm)
+	{
+		/*
+		* converts a percentage value to pixels relative to the current resolution in the x-axis
+		* @param float perc         the percentage value
+		* @param sf::VideoMode& vm  the current videomode of the window
+		* @param float              the calculated pixel value
+		*/
+		return std::floor(static_cast<float>(vm.width) * (perc / 100.f));
+	}
+
+	const float p2pY(const float perc, const sf::VideoMode& vm)
+	{
+		/*
+		* converts a percentage value to pixels relative to the current resolution in the y-axis
+		* @param float perc         the percentage value
+		* @param sf::VideoMode& vm  the current videomode of the window
+		* @param float              the calculated pixel value
+		*/
+		return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
+	}
+
+	const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
+	{
+		/**
+		 * calculates the character size for text using the current resolution and a constant
+		 * @param sf::VideoMode& vm  the current videomode of the window
+		 * @param unsigned  modifier used to modify the character size in a more custom way         
+		 * @return  unsigned         the calculated character size value
+		 */
+
+		return static_cast<unsigned>((vm.width + vm.height) / modifier);
+	}
+
+
 	Button::Button(float x, float y, float width, float height,
 		sf::Font* font, std::string text, unsigned characterSize,
 		sf::Color textIdleColor, sf::Color textHoverColor, sf::Color textActiveColor,

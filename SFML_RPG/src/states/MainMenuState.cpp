@@ -8,7 +8,8 @@ MainMenuState::MainMenuState(StateData* stateData)
 	initBackground();
 	initFonts();
 	initKeybinds();
-	initButtons();
+	initGui();
+	resetGui();
 }
 
 MainMenuState::~MainMenuState()
@@ -139,25 +140,40 @@ void MainMenuState::initFonts()
 	}
 }
 
-void MainMenuState::initButtons()
+void MainMenuState::initGui()
 {
-	m_Buttons["GAME_STAET"] = new GUI::Button(300.f, 480.f, 250.f, 65.f,
-		&m_Font, "New Game", 50,
+	const sf::VideoMode& vm = m_StateData->m_GfxSettings->m_Resolution;
+	m_Buttons["GAME_STAET"] = new GUI::Button(
+		GUI::p2pX(15.6f, vm), GUI::p2pY(44.4f, vm), 
+		GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm),
+		&m_Font, "New Game", GUI::calcCharSize(vm),
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["SETTINGS_STATE"] = new GUI::Button(300.f, 580.f, 250.f, 65.f,
-		&m_Font, "Settings", 50,
+	m_Buttons["SETTINGS_STATE"] = new GUI::Button(
+		GUI::p2pX(15.6f, vm), GUI::p2pY(53.7f, vm),
+		GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm),
+		&m_Font, "Settings", GUI::calcCharSize(vm),
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["EDITOR_STATE"] = new GUI::Button(300.f, 680.f, 250.f, 65.f,
-		&m_Font, "Editor", 50,
+	m_Buttons["EDITOR_STATE"] = new GUI::Button(
+		GUI::p2pX(15.6f, vm), GUI::p2pY(63.f, vm),
+		GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm),
+		&m_Font, "Editor", GUI::calcCharSize(vm),
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	m_Buttons["EXIT_STATE"] = new GUI::Button(300.f, 880.f, 250.f, 65.f,
-		&m_Font, "Quit", 50,
+	m_Buttons["EXIT_STATE"] = new GUI::Button(
+		GUI::p2pX(15.6f, vm), GUI::p2pY(81.5f, vm),
+		GUI::p2pX(13.f, vm), GUI::p2pY(6.f, vm),
+		&m_Font, "Quit", GUI::calcCharSize(vm),
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+}
+
+void MainMenuState::resetGui()
+{
+	m_Buttons.clear();
+	initGui();
 }

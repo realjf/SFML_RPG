@@ -37,8 +37,6 @@ public:
 	void unpauseState();
 	virtual void updateKeytime(const float& dt);
 	const bool getKeytime();
-	const float p2pX(const float perc);
-	const float p2pY(const float perc);
 
 protected:
 	StateData* m_StateData;
